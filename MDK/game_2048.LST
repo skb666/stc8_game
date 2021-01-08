@@ -1,0 +1,24 @@
+C51 COMPILER V9.60.0.0   GAME_2048                                                         01/08/2021 11:01:06 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE GAME_2048
+OBJECT MODULE PLACED IN .\Out_File\game_2048.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE game_2048.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\Libraries
+                    -) DEBUG OBJECTEXTEND OBJECT(.\Out_File\game_2048.obj)
+
+line level    source
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

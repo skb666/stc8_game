@@ -1,0 +1,186 @@
+C51 COMPILER V9.60.0.0   HARDIIC                                                           01/08/2021 01:23:25 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE HARDIIC
+OBJECT MODULE PLACED IN .\Out_File\hardiic.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\hardiic.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\L
+                    -ibraries) DEBUG OBJECTEXTEND PRINT(.\hardiic.lst) OBJECT(.\Out_File\hardiic.obj)
+
+line level    source
+
+   1          #include "hardiic.h"
+   2          
+   3          //========================================================================
+   4          // 描述: 等待以及清除中断标志位.
+   5          // 参数: none.
+   6          // 返回: none.
+   7          //========================================================================
+   8          void hardiic_wait()
+   9          {
+  10   1          while(!(I2CMSST &0x40));
+  11   1          I2CMSST &= ~0x40;
+  12   1      }
+  13          
+  14          //========================================================================
+  15          // 描述: IIC初始化.
+  16          // 参数: none.
+  17          // 返回: none.
+  18          //========================================================================
+  19          void hardiic_init()
+  20          {
+  21   1          HARDIIC_SCL_OUT;                //开漏输出
+  22   1          HARDIIC_SDA_OUT;                //开漏输出
+  23   1          P_SW2 |= HARDIIC_IICX;          //外设端口切换控制寄存器
+  24   1          I2CCFG = 0xe0;                  //使能IIC主机模式
+  25   1          I2CMSST = 0x00;                 //IIC主机状态寄存器清零
+  26   1      }
+  27          
+  28          //========================================================================
+  29          // 描述: IIC发送start信号.
+  30          // 参数: none.
+  31          // 返回: none.
+  32          //========================================================================
+  33          void hardiic_start()
+  34          {
+  35   1          I2CMSCR = 0x01;                         //发送START命令 
+  36   1          hardiic_wait();
+  37   1      }
+  38          
+  39          //========================================================================
+  40          // 描述: IIC发送stop信号.
+  41          // 参数: none.
+  42          // 返回: none.
+  43          //========================================================================
+  44          void hardiic_stop()
+  45          {
+  46   1          I2CMSCR = 0x06;                         //发送stop命令
+  47   1          hardiic_wait();     
+  48   1      }
+  49          
+  50          //========================================================================
+  51          // 描述: IIC等待ack信号.
+  52          // 参数: none.
+  53          // 返回: 0，接收到应答信号; 1，没有接收到应答信号.
+  54          //========================================================================
+C51 COMPILER V9.60.0.0   HARDIIC                                                           01/08/2021 01:23:25 PAGE 2   
+
+  55          uint8 hardiic_wait_ack()
+  56          {
+  57   1          I2CMSCR = 0x03; 
+  58   1          hardiic_wait();
+  59   1          if( I2CMSST & 0x02){
+  60   2              return 1;
+  61   2          }
+  62   1          return 0;
+  63   1      }
+  64          
+  65          //========================================================================
+  66          // 描述: IIC发送ack信号.
+  67          // 参数: none.
+  68          // 返回: none.
+  69          //========================================================================
+  70          void hardiic_ack()
+  71          {
+  72   1          I2CMSST = 0x00;                         //设置ACK信号
+  73   1          I2CMSCR = 0x05;                         //发送ACK命令
+  74   1          hardiic_wait();
+  75   1      }
+  76          
+  77          //========================================================================
+  78          // 描述: IIC发送NAck信号.
+  79          // 参数: none.
+  80          // 返回: none.
+  81          //========================================================================
+  82          void hardiic_nack()
+  83          {
+  84   1          I2CMSST = 0x01;                         //设置NAK信号
+  85   1          I2CMSCR = 0x05;                         //发送ACK命令
+  86   1          hardiic_wait();
+  87   1      }
+  88          
+  89          //========================================================================
+  90          // 描述: IIC发送一个字节数据.
+  91          // 参数: 发送的字节数据.
+  92          // 返回: none.
+  93          //========================================================================
+  94          void hardiic_send_byte(uint8 iic_data)
+  95          {
+  96   1          I2CTXD = iic_data;
+  97   1          I2CMSCR = 0x02; 
+  98   1              hardiic_wait();
+  99   1      }       
+ 100          
+ 101          //========================================================================
+ 102          // 描述: IIC读取一个字节数据.
+ 103          // 参数: none
+ 104          // 返回: 读取到的字节数据.
+ 105          //========================================================================
+ 106          uint8 hardiic_read_byte()       
+ 107          {
+ 108   1          I2CMSCR = 0x04;     //发送RECV命令
+ 109   1          hardiic_wait();
+ 110   1          return I2CRXD;
+ 111   1      }
+ 112          
+ 113          //========================================================================
+ 114          // 描述: IIC读取n个字节数据.
+ 115          // 参数: 设备地址（8位模式，7位地址需要左移一位），寄存器地址，缓存数据地址，数量
+ 116          // 返回: none.
+C51 COMPILER V9.60.0.0   HARDIIC                                                           01/08/2021 01:23:25 PAGE 3   
+
+ 117          //========================================================================
+ 118          void hardiic_read_nbyte(uint8 device_addr, uint8 reg_addr, uint8 *p, uint8 number)
+ 119          {
+ 120   1          hardiic_start();                        //开始信号
+ 121   1          hardiic_send_byte(device_addr);      //发送器件写地址
+ 122   1          hardiic_wait_ack();
+ 123   1          hardiic_send_byte(reg_addr);                //发送寄存器地址
+ 124   1          hardiic_wait_ack();
+ 125   1      
+ 126   1          hardiic_start();                        //重复开始信号
+ 127   1          hardiic_send_byte(device_addr | 0x01);      //发送器件读地址
+ 128   1          hardiic_wait_ack(); 
+ 129   1          do
+ 130   1          {
+ 131   2              *p = hardiic_read_byte();
+ 132   2              p++;
+ 133   2              if(number != 1) hardiic_ack();     
+ 134   2      
+ 135   2          }while(--number);
+ 136   1          hardiic_nack(); 
+ 137   1          hardiic_stop();
+ 138   1      }
+ 139          
+ 140          //========================================================================
+ 141          // 描述: IIC写n个字节数据.
+ 142          // 参数: 设备地址（8位模式，7位地址需要左移一位），寄存器地址，缓存数据地址，数量
+ 143          // 返回: none.
+ 144          //========================================================================
+ 145          void hardiic_write_nbyte(uint8 device_addr, uint8 reg_addr, uint8 *p, uint8 number)
+ 146          {
+ 147   1          hardiic_start();                        //开始信号
+ 148   1          hardiic_send_byte(device_addr);      //发送器件写地址
+ 149   1          hardiic_wait_ack();
+ 150   1          hardiic_send_byte(reg_addr);                //发送寄存器地址
+ 151   1          hardiic_wait_ack();
+ 152   1          do
+ 153   1          {
+ 154   2              hardiic_send_byte(*p++);             //发送数据
+ 155   2              hardiic_wait_ack();
+ 156   2          }while(--number);
+ 157   1          hardiic_stop();                          //发送停止命令
+ 158   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    259    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----      12
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

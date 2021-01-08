@@ -1,0 +1,294 @@
+C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 01:23:28 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE IR
+OBJECT MODULE PLACED IN .\Out_File\ir.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\ir.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\Librar
+                    -ies) DEBUG OBJECTEXTEND PRINT(.\ir.lst) OBJECT(.\Out_File\ir.obj)
+
+line level    source
+
+   1          #include "ir.h"
+   2          
+   3          bit _b_ir_press;               //红外接收标志
+   4          xdata uint8  _ir_code;           //红外键码
+   5          xdata uint16 _user_code;          //用户码
+   6          
+   7          //========================================================================
+   8          // 描述: 红外延时函数(内部调用)
+   9          // 参数: time:延时的时间（不精确）.
+  10          // 返回: none.
+  11          //========================================================================
+  12          static void ir_delayus(uint16 time)
+  13          {
+  14   1          uint8 i;
+  15   1          do{
+  16   2              i = 6;
+  17   2              while (--i);
+  18   2          }while(time--);
+  19   1      }
+  20          
+  21          //========================================================================
+  22          // 描述: 红外发射使能(内部调用)
+  23          // 参数: fre:红外发射频率（kHz）.
+  24          // 返回: none.
+  25          //========================================================================
+  26          static void enable_ir_out(uint8 fre)
+  27          {  
+  28   1          IR_SEND_PIN_OUT;
+  29   1          pwm_init(IR_SEND_PWM, (fre*1000L), 0);
+  30   1      }
+  31          
+  32          //========================================================================
+  33          // 描述: 红外发射禁止(内部调用)
+  34          // 参数: none.
+  35          // 返回: none.
+  36          //========================================================================
+  37          static void disable_ir_out()
+  38          {
+  39   1          IR_SEND_PIN_INIT;
+  40   1      }
+  41          
+  42          //========================================================================
+  43          // 描述: 红外发射载波信号(内部调用)
+  44          // 参数: time:发射的时间.
+  45          // 返回: none.
+  46          //========================================================================
+  47          static void ir_tx_mark(uint16 time)
+  48          {
+  49   1          // 占空比 1/3
+  50   1          pwm_duty(IR_SEND_PWM, PWM_DUTY_MAX/3*2);
+  51   1          ir_delayus(time);
+  52   1      }
+  53          
+  54          //========================================================================
+C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 01:23:28 PAGE 2   
+
+  55          // 描述: 红外发射空闲信号(内部调用)
+  56          // 参数: time:发射的时间.
+  57          // 返回: none.
+  58          //========================================================================
+  59          static void ir_tx_space(uint16 time)
+  60          {
+  61   1          pwm_duty(IR_SEND_PWM, PWM_DUTY_MAX);
+  62   1          ir_delayus(time);
+  63   1      }
+  64          
+  65          //========================================================================
+  66          // 描述: 红外发射NEC码
+  67          // 参数: address:发送的地址 ;command: 发送的命令.
+  68          // 返回: none.
+  69          //========================================================================
+  70          void ir_send_nec(uint8 address, uint8 command)
+  71          {
+  72   1          uint8 i;
+  73   1          uint8 inverse_address = ~address;
+  74   1          uint8 inverse_command = ~command;
+  75   1      
+  76   1          // 1. 载波配置
+  77   1          enable_ir_out(38);
+  78   1          // 2. 发送引导码
+  79   1          ir_tx_mark(NEC_HDR_MARK);
+  80   1          ir_tx_space(NEC_HDR_SPACE);
+  81   1          // 3. 发送地址
+  82   1          for (i=0;i<8;i++)
+  83   1          {
+  84   2              if (address & 0x01) 
+  85   2              {
+  86   3                  ir_tx_mark(NEC_BIT_MARK);
+  87   3                  ir_tx_space(NEC_ONE_SPACE);
+  88   3              } 
+  89   2              else 
+  90   2              {
+  91   3                  ir_tx_mark(NEC_BIT_MARK);
+  92   3                  ir_tx_space(NEC_ZERO_SPACE);
+  93   3              }
+  94   2              address >>= 1;
+  95   2          }
+  96   1          // 4. 发送地址反码
+  97   1          
+  98   1          for (i=0;i<8;i++)
+  99   1          {
+ 100   2              if (inverse_address & 0x01) 
+ 101   2              {
+ 102   3                  ir_tx_mark(NEC_BIT_MARK);
+ 103   3                  ir_tx_space(NEC_ONE_SPACE);
+ 104   3              } 
+ 105   2              else 
+ 106   2              {
+ 107   3                  ir_tx_mark(NEC_BIT_MARK);
+ 108   3                  ir_tx_space(NEC_ZERO_SPACE);
+ 109   3              }
+ 110   2              inverse_address >>= 1;
+ 111   2          }
+ 112   1      
+ 113   1          // 5. 发送命令
+ 114   1          for (i=0;i<8;i++)
+ 115   1          {
+ 116   2              if (command & 0x01) 
+C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 01:23:28 PAGE 3   
+
+ 117   2              {
+ 118   3                  ir_tx_mark(NEC_BIT_MARK);
+ 119   3                  ir_tx_space(NEC_ONE_SPACE);
+ 120   3              } 
+ 121   2              else 
+ 122   2              {
+ 123   3                  ir_tx_mark(NEC_BIT_MARK);
+ 124   3                  ir_tx_space(NEC_ZERO_SPACE);
+ 125   3              }
+ 126   2              command >>= 1;
+ 127   2          }
+ 128   1      
+ 129   1          // 6. 发送命令反码
+ 130   1          for (i=0;i<8;i++)
+ 131   1          {
+ 132   2              if ((inverse_command) & 0x01) 
+ 133   2              {
+ 134   3                  ir_tx_mark(NEC_BIT_MARK);
+ 135   3                  ir_tx_space(NEC_ONE_SPACE);
+ 136   3              } 
+ 137   2              else 
+ 138   2              {
+ 139   3                  ir_tx_mark(NEC_BIT_MARK);
+ 140   3                  ir_tx_space(NEC_ZERO_SPACE);
+ 141   3              }
+ 142   2              inverse_command >>= 1;
+ 143   2          }
+ 144   1          ir_tx_mark(NEC_BIT_MARK);
+ 145   1          ir_tx_space(1);// 为0，进入死循环
+ 146   1          disable_ir_out();
+ 147   1      }
+ 148          
+ 149          //========================================================================
+ 150          // 描述: 红外接收回调函数（调用周期100uS）
+ 151          // 参数: none.
+ 152          // 返回: none.
+ 153          //========================================================================
+ 154          void ir_rec_callback()
+ 155          {
+ 156   1          static xdata uint8  IR_SampleCnt;       //采样计数
+ 157   1          static xdata uint8  IR_BitCnt;          //编码位数
+ 158   1          static xdata uint8  IR_UserH;           //用户码(地址)高字节
+ 159   1          static xdata uint8  IR_UserL;           //用户码(地址)低字节
+ 160   1          static xdata uint8  IR_data;            //数据原码
+ 161   1          static xdata uint8  IR_DataShift;        //数据移位
+ 162   1      
+ 163   1          static bit P_IR_RX_temp;             //Last sample
+ 164   1          static bit B_IR_Sync;                //已收到同步标志
+ 165   1      
+ 166   1          uint8  SampleTime;
+ 167   1          uint8  IR_TemShit;
+ 168   1      
+ 169   1          IR_SampleCnt++;                         //Sample + 1
+ 170   1      
+ 171   1          F0 = P_IR_RX_temp;                      //Save Last sample status
+ 172   1          P_IR_RX_temp = IR_REC_PIN;                 //Read current status
+ 173   1          if(F0 && !P_IR_RX_temp)                 //Pre-sample is high，and current sample is low, so is fall ed
+             -ge
+ 174   1          {
+ 175   2              SampleTime = IR_SampleCnt;          //get the sample time
+ 176   2              IR_SampleCnt = 0;                   //Clear the sample counter
+ 177   2      
+C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 01:23:28 PAGE 4   
+
+ 178   2              if(SampleTime > D_IR_SYNC_MAX)     B_IR_Sync = 0;  //large the Maxim SYNC time, then error
+ 179   2              else if(SampleTime >= D_IR_SYNC_MIN)                    //SYNC
+ 180   2              {
+ 181   3                  if(SampleTime >= D_IR_SYNC_DIVIDE)
+ 182   3                  {
+ 183   4                      B_IR_Sync = 1;                  //has received SYNC
+ 184   4                      IR_BitCnt = D_IR_BIT_NUMBER;    //Load bit number
+ 185   4                  }
+ 186   3              }
+ 187   2              else if(B_IR_Sync)                      //has received SYNC
+ 188   2              {
+ 189   3                  if(SampleTime > D_IR_DATA_MAX)      B_IR_Sync=0;    //data samlpe time too large
+ 190   3                  else
+ 191   3                  {
+ 192   4                      IR_DataShift >>= 1;                  //data shift right 1 bit
+ 193   4                      if(SampleTime >= D_IR_DATA_DIVIDE)  IR_DataShift |= 0x80;    //devide data 0 or 1
+ 194   4                      if(--IR_BitCnt == 0)                //bit number is over?
+ 195   4                      {
+ 196   5                          B_IR_Sync = 0;                  //Clear SYNC
+ 197   5      
+ 198   5                          // if(~IR_DataShift == IR_data)     //判断数据正反码
+ 199   5                          IR_TemShit = ~IR_DataShift;
+ 200   5                          if(IR_TemShit == IR_data);
+ 201   5                          {
+ 202   6                              _user_code = ((uint16)IR_UserH << 8) + IR_UserL;
+ 203   6                              _ir_code      = IR_data;
+ 204   6                              _b_ir_press   = 1;           //数据有效
+ 205   6                          }
+ 206   5                      }
+ 207   4                      else if((IR_BitCnt & 7)== 0)        //one byte receive
+ 208   4                      {
+ 209   5                          IR_UserL = IR_UserH;            //Save the User code high byte
+ 210   5                          IR_UserH = IR_data;             //Save the User code low byte
+ 211   5                          IR_data  = IR_DataShift;         //Save the IR data byte
+ 212   5                      }
+ 213   4                  }
+ 214   3              }
+ 215   2          }
+ 216   1      }
+ 217          
+ 218          //========================================================================
+ 219          // 描述: 红外接收初始化
+ 220          // 参数: none.
+ 221          // 返回: none.
+ 222          //========================================================================
+ 223          void ir_rx_init()
+ 224          {
+ 225   1          IR_REC_PIN_MODE;
+ 226   1      }
+ 227          
+ 228          //========================================================================
+ 229          // 描述: 接收到红外信号
+ 230          // 参数: none.
+ 231          // 返回: 1,接收到红外信号;0,没有接收到红外数据.
+ 232          //========================================================================
+ 233          uint8 ir_rx_available()
+ 234          {
+ 235   1          if(_b_ir_press)
+ 236   1          {
+ 237   2              _b_ir_press = 0;
+ 238   2              return 1;
+ 239   2          }
+C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 01:23:28 PAGE 5   
+
+ 240   1          return 0;
+ 241   1      }
+ 242          
+ 243          //========================================================================
+ 244          // 描述: 接收到用户码
+ 245          // 参数: none.
+ 246          // 返回:  接收到的用户码.
+ 247          //========================================================================
+ 248          uint8 ir_rx_user_code()
+ 249          {
+ 250   1          return _user_code;
+ 251   1      }
+ 252          
+ 253          //========================================================================
+ 254          // 描述: 接收键码
+ 255          // 参数: none.
+ 256          // 返回: 接收到的键码.
+ 257          //========================================================================
+ 258          uint8 ir_rx_ircode()
+ 259          {
+ 260   1           return _ir_code;
+ 261   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    692    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      9      11
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      3    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

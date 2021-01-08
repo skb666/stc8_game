@@ -1,0 +1,46 @@
+C51 COMPILER V9.60.0.0   SYS                                                               01/08/2021 01:23:24 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE SYS
+OBJECT MODULE PLACED IN .\Out_File\sys.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Libraries\sys.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\Li
+                    -braries) DEBUG OBJECTEXTEND PRINT(.\sys.lst) OBJECT(.\Out_File\sys.obj)
+
+line level    source
+
+   1          #include "sys.h"
+   2          #include "hc595.h"
+   3          #include "led8.h"
+   4          
+   5          uint32 sys_clk = 24000000;//设置PWM、定时器、串口、EEPROM频率参数
+   6          
+   7          void InitMCU(){
+   8   1              P0M1 = 0;   P0M0 = 0;   //设置为准双向口
+   9   1          P1M1 = 0;   P1M0 = 0;   //设置为准双向口
+  10   1          P2M1 = 0;   P2M0 = 0;   //设置为准双向口
+  11   1          P3M1 = 0;   P3M0 = 0;   //设置为准双向口
+  12   1          P4M1 = 0;   P4M0 = 0;   //设置为准双向口
+  13   1          P5M1 = 0;   P5M0 = 0;   //设置为准双向口
+  14   1          P6M1 = 0;   P6M0 = 0;   //设置为准双向口
+  15   1          P7M1 = 0;   P7M0 = 0;   //设置为准双向口
+  16   1      
+  17   1              led8_disable();                 //LED Power OFF
+  18   1          hc595_init(); 
+  19   1              hc595_disable();
+  20   1              
+  21   1              P41 = 0;                                //关闭CMP灯
+  22   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     45    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      4    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

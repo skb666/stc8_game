@@ -1,0 +1,1 @@
+"..\Device\pcf8563.c" LARGE OPTIMIZE (8,SPEED) BROWSE INCDIR(..\Device;..\Libraries) DEBUG OBJECTEXTEND PRINT(.\pcf8563.lst) OBJECT(.\Out_File\pcf8563.obj)
