@@ -143,9 +143,9 @@ float eeprom_read_float(uint16 EE_address)
 // 参数: EE_address:要读取的地址; dat:要写入的float数据.
 // 返回: none.
 //========================================================================
-void eeprom_write_float(uint16 EE_address, float dat)
+uint8 eeprom_write_float(uint16 EE_address, float dat)
 {	
-	eeprom_write(EE_address,(uint8 *)&dat,sizeof(float));
+	return eeprom_write(EE_address,(uint8 *)&dat,sizeof(float));
 }
 
 //========================================================================
@@ -165,7 +165,7 @@ int eeprom_read_int(uint16 EE_address)
 // 参数: EE_address:要读取的地址; dat:要写入的float数据.
 // 返回: none.
 //========================================================================
-void eeprom_write_int(uint16 EE_address, int dat)
+uint8 eeprom_write_int(uint16 EE_address, int dat)
 {	
-	eeprom_write(EE_address, (uint8 *)&dat,sizeof(int));
+	return eeprom_write(EE_address, (uint8 *)&dat,sizeof(int));
 }

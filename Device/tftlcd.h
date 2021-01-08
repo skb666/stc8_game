@@ -101,7 +101,3 @@ void tft_lcd_draw_bmp16(uint16 x0,uint16 y0,uint16 w,uint16 h,const uint8 *p);	/
 
 #endif  //tftlcd.h
 
-
-
-
-

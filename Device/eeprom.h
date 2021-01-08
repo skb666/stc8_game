@@ -20,11 +20,11 @@ sfr IAP_TPS = 0xf5;
 #define     EEPROM_IAP_CMD_FAIL    (1<<4)
 
 void eeprom_sector_erase(uint16 EE_address);//EEPROM擦除指定扇区
-void eeprom_read(uint16 EE_address,uint8 *DataAddress,uint8 length);//EEPROM写数据
-uint8 eeprom_write(uint16 EE_address,uint8 *DataAddress,uint8 length);//EEPROM读数据
+void eeprom_read(uint16 EE_address,uint8 *DataAddress,uint8 length);//EEPROM读数据
+uint8 eeprom_write(uint16 EE_address,uint8 *DataAddress,uint8 length);//EEPROM写数据
 float eeprom_read_float(uint16 EE_address);
-void eeprom_write_float(uint16 EE_address, float dat);
+uint8 eeprom_write_float(uint16 EE_address, float dat);
 int eeprom_read_int(uint16 EE_address);
-void eeprom_write_int(uint16 EE_address, int dat);
+uint8 eeprom_write_int(uint16 EE_address, int dat);
 
 #endif
