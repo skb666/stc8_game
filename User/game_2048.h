@@ -4,6 +4,7 @@
 #include "sys.h"
 #include "tftlcd.h"
 #include <stdlib.h>
+#include "eeprom.h"
 
 void game2048_init();                   // 2048初始化游戏界面
 void game2048_run();                    // 运行游戏

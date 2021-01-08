@@ -3,7 +3,7 @@
 // 2048游戏数据
 uint16 data2048[4][4];
 uint16 Target = 2048;
-int score, best;
+int score=0, best=0;
 enum{
     S_FAIL = 0,
     S_WIN,
@@ -76,6 +76,7 @@ uint8 moveLeft(){
             }else{
                 if(lastValue == data2048[i][j]){
                     data2048[i][currentWritePos] = lastValue*2;
+                    score += lastValue*2;
                     lastValue = 0;
                     if(data2048[i][currentWritePos] == Target) gameStatus = S_WIN;
                 }else{
@@ -109,6 +110,7 @@ uint8 moveRight(){
             }else{
                 if(lastValue == data2048[i][j]){
                     data2048[i][currentWritePos] = lastValue*2;
+                    score += lastValue*2;
                     lastValue = 0;
                     if(data2048[i][currentWritePos] == Target) gameStatus = S_WIN;
                 }else{
@@ -142,6 +144,7 @@ uint8 moveUp(){
             }else{
                 if(lastValue == data2048[i][j]){
                     data2048[currentWritePos][j] = lastValue*2;
+                    score += lastValue*2;
                     lastValue = 0;
                     if(data2048[currentWritePos][j] == Target) gameStatus = S_WIN;
                 }else{
@@ -175,6 +178,7 @@ uint8 moveDown(){
             }else{
                 if(lastValue == data2048[i][j]){
                     data2048[currentWritePos][j] = lastValue*2;
+                    score += lastValue*2;
                     lastValue = 0;
                     if(data2048[currentWritePos][j] == Target) gameStatus = S_WIN;
                 }else{
@@ -201,18 +205,19 @@ void restart(){
             data2048[i][j] = 0;
     generate_randNum();
     generate_randNum();
+    score = 0;
     gameStatus = S_NORMAL;
 }
 
 // 判断游戏结束
 uint8 isOver(){
     uint8 i, j;
-    for (i=0; i<4; ++i){
-        for (j=0; j<4; ++j){
-            // 有空位或者相邻有一样的都可以继续
-            if ((j < 3) && (data2048[i][j]*data2048[i][j+1] == 0 || data2048[i][j] == data2048[i][j+1]))
+    for(i=0; i<4; ++i){
+        for(j=0; j<4; ++j){
+            if(!data2048[i][j]) return 0;
+            if ((j+1 < 4) && (data2048[i][j] == data2048[i][j+1]))
                 return 0;
-            if ((i < 3) && (data2048[i][j]*data2048[i+1][j] == 0 || data2048[i][j] == data2048[i+1][j]))
+            if ((i+1 < 4) && (data2048[i][j] == data2048[i+1][j]))
                 return 0;
         }
     }
@@ -222,10 +227,17 @@ uint8 isOver(){
 // 设置测试数据
 void setdata(){
     uint8 i, j;
+    int t = 50;
     for(i=0; i<4; ++i)
         for(j=0; j<4; ++j)
             data2048[i][j] = 16 << i << j;
-    score = best = 0;
+    score = 0;
+    best = eeprom_read_int(0);
+    if(best<0){
+        best = 0;
+        eeprom_sector_erase(0);
+        eeprom_write_int(0, best);
+    }
 }
 
 // 2048初始化游戏界面
@@ -251,35 +263,39 @@ void game2048_init(){
     setdata();
 }
 
-// 字符：0   1   2   3   4   5   6   7   8   9   #   *   w(+) s(/) a(-) d(x) ok
-// IR  ：13  0   1   2   4   5   6   8   9   10  14  12  17   25   20   22   21
-// 按键：0   1   2   3   4   5   6   7   8   9   35  42  43   47   45   120  -
 // 处理输入
 void game2048_updateStatus(uint8 key){
     uint8 updated = 0;
+
     switch(key){
-        case 12:
+        case 'q':
             gameStatus = S_QUIT;
             break;
-        case 14:
+        case 'r':
             restart();
             break;
-        case 20:
+        case 'a':
             if(gameStatus == S_NORMAL) updated = moveLeft();
             break;
-        case 22:
+        case 'd':
             if(gameStatus == S_NORMAL) updated = moveRight();
             break;
-        case 17:
+        case 'w':
             if(gameStatus == S_NORMAL) updated = moveUp();
             break;
-        case 25:
+        case 's':
             if(gameStatus == S_NORMAL) updated = moveDown();
             break;
     }
+    
     if(updated){
         generate_randNum();
         if(isOver()) gameStatus = S_FAIL;
+        if(score>best){
+            best = score;
+            eeprom_sector_erase(0);
+            eeprom_write_int(0, best);
+        }
     }
 }
 
@@ -342,7 +358,7 @@ void game2048_run(){
                 }
             }
         }
-        
+
         if(gameStatus == S_WIN)
             tft_lcd_show_string(36,300,"          You Win !         ",TFT_LCD_RED,TFT_LCD_LGRAY,12,0);
         else if(gameStatus == S_FAIL)
