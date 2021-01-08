@@ -187,7 +187,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\game_2048.c</PathWithFileName>
+      <PathWithFileName>..\User\game_2048.c</PathWithFileName>
       <FilenameWithoutPath>game_2048.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>

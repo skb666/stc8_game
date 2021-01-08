@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   LCD1602                                                           01/08/2021 01:23:25 PAGE 1   
+C51 COMPILER V9.60.0.0   LCD1602                                                           01/08/2021 19:05:39 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LCD1602
 OBJECT MODULE PLACED IN .\Out_File\lcd1602.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\lcd1602.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\L
-                    -ibraries) DEBUG OBJECTEXTEND PRINT(.\lcd1602.lst) OBJECT(.\Out_File\lcd1602.obj)
+                    -ibraries;..\User) DEBUG OBJECTEXTEND PRINT(.\lcd1602.lst) OBJECT(.\Out_File\lcd1602.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52          {
   53   1              LCD1602_E = 0;
   54   1              LCD1602_RS = 0; 
-C51 COMPILER V9.60.0.0   LCD1602                                                           01/08/2021 01:23:25 PAGE 2   
+C51 COMPILER V9.60.0.0   LCD1602                                                           01/08/2021 19:05:39 PAGE 2   
 
   55   1              LCD1602_RW = 0;
   56   1      
@@ -126,7 +126,7 @@ line level    source
  114   1      }
  115          
  116          //========================================================================
-C51 COMPILER V9.60.0.0   LCD1602                                                           01/08/2021 01:23:25 PAGE 3   
+C51 COMPILER V9.60.0.0   LCD1602                                                           01/08/2021 19:05:39 PAGE 3   
 
  117          // 描述: 在指定位置显示数字
  118          // 参数: x,y:坐标; Num:显示的数字; len:长度.
@@ -190,7 +190,7 @@ line level    source
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =    465    ----
    CONSTANT SIZE    =      3    ----
-C51 COMPILER V9.60.0.0   LCD1602                                                           01/08/2021 01:23:25 PAGE 4   
+C51 COMPILER V9.60.0.0   LCD1602                                                           01/08/2021 19:05:39 PAGE 4   
 
    XDATA SIZE       =   ----      30
    PDATA SIZE       =   ----    ----

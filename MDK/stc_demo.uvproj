@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\Device;..\Libraries</IncludePath>
+              <IncludePath>..\Device;..\Libraries;..\User</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -384,7 +384,7 @@
             <File>
               <FileName>game_2048.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\game_2048.c</FilePath>
+              <FilePath>..\User\game_2048.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   PCF8563                                                           01/08/2021 01:48:40 PAGE 1   
+C51 COMPILER V9.60.0.0   PCF8563                                                           01/08/2021 19:05:41 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE PCF8563
 OBJECT MODULE PLACED IN .\Out_File\pcf8563.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\pcf8563.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\L
-                    -ibraries) DEBUG OBJECTEXTEND PRINT(.\pcf8563.lst) OBJECT(.\Out_File\pcf8563.obj)
+                    -ibraries;..\User) DEBUG OBJECTEXTEND PRINT(.\pcf8563.lst) OBJECT(.\Out_File\pcf8563.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52          // ²ÎÊı: none.
   53          // ·µ»Ø: none.
   54          //========================================================================
-C51 COMPILER V9.60.0.0   PCF8563                                                           01/08/2021 01:48:40 PAGE 2   
+C51 COMPILER V9.60.0.0   PCF8563                                                           01/08/2021 19:05:41 PAGE 2   
 
   55          void pcf8563_init()
   56          {
@@ -126,7 +126,7 @@ line level    source
  114          //========================================================================
  115          void pcf8563_write_rtc(pcf8563_Time *tim)
  116          {
-C51 COMPILER V9.60.0.0   PCF8563                                                           01/08/2021 01:48:40 PAGE 3   
+C51 COMPILER V9.60.0.0   PCF8563                                                           01/08/2021 19:05:41 PAGE 3   
 
  117   1          uint8  tmp[7];
  118   1          tim->year = tim->year - 2000;

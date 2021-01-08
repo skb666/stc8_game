@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 01:23:28 PAGE 1   
+C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 19:05:40 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE IR
 OBJECT MODULE PLACED IN .\Out_File\ir.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\ir.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\Librar
-                    -ies) DEBUG OBJECTEXTEND PRINT(.\ir.lst) OBJECT(.\Out_File\ir.obj)
+                    -ies;..\User) DEBUG OBJECTEXTEND PRINT(.\ir.lst) OBJECT(.\Out_File\ir.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52   1      }
   53          
   54          //========================================================================
-C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 01:23:28 PAGE 2   
+C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 19:05:40 PAGE 2   
 
   55          // 描述: 红外发射空闲信号(内部调用)
   56          // 参数: time:发射的时间.
@@ -126,7 +126,7 @@ line level    source
  114   1          for (i=0;i<8;i++)
  115   1          {
  116   2              if (command & 0x01) 
-C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 01:23:28 PAGE 3   
+C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 19:05:40 PAGE 3   
 
  117   2              {
  118   3                  ir_tx_mark(NEC_BIT_MARK);
@@ -190,7 +190,7 @@ line level    source
  175   2              SampleTime = IR_SampleCnt;          //get the sample time
  176   2              IR_SampleCnt = 0;                   //Clear the sample counter
  177   2      
-C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 01:23:28 PAGE 4   
+C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 19:05:40 PAGE 4   
 
  178   2              if(SampleTime > D_IR_SYNC_MAX)     B_IR_Sync = 0;  //large the Maxim SYNC time, then error
  179   2              else if(SampleTime >= D_IR_SYNC_MIN)                    //SYNC
@@ -254,7 +254,7 @@ line level    source
  237   2              _b_ir_press = 0;
  238   2              return 1;
  239   2          }
-C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 01:23:28 PAGE 5   
+C51 COMPILER V9.60.0.0   IR                                                                01/08/2021 19:05:40 PAGE 5   
 
  240   1          return 0;
  241   1      }

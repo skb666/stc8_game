@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 01:23:28 PAGE 1   
+C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 19:05:40 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE PWM
 OBJECT MODULE PLACED IN .\Out_File\PWM.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\PWM.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\Libra
-                    -ries) DEBUG OBJECTEXTEND PRINT(.\PWM.lst) OBJECT(.\Out_File\PWM.obj)
+                    -ries;..\User) DEBUG OBJECTEXTEND PRINT(.\PWM.lst) OBJECT(.\Out_File\PWM.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   50   2                      {
   51   3                              pinMode(P1_3, GPIO_PP);
   52   3                              break;
-C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 01:23:28 PAGE 2   
+C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 19:05:40 PAGE 2   
 
   53   3                      }
   54   2                      case PWM2P_P22:
@@ -126,7 +126,7 @@ line level    source
  112   3                              pinMode(P1_7, GPIO_PP);
  113   3                              break;
  114   3                      }
-C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 01:23:28 PAGE 3   
+C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 19:05:40 PAGE 3   
 
  115   2                      case PWM4P_P26:
  116   2                      {
@@ -190,7 +190,7 @@ line level    source
  174   3                      }
  175   2                      case PWM6_P01:
  176   2                      {
-C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 01:23:28 PAGE 4   
+C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 19:05:40 PAGE 4   
 
  177   3                              pinMode(P0_1, GPIO_PP);
  178   3                              break;
@@ -254,7 +254,7 @@ line level    source
  235          //  Sample usage:           
  236          //                                                      pwm_init(PWM0_P00, 100, 5000);     //通道PWM0  引脚P0.0  频率100  占空比5000
  237          //                                                      PWM_DUTY_MAX为10000
-C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 01:23:28 PAGE 5   
+C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 19:05:40 PAGE 5   
 
  238          //--------------------------------------------------------------------------------------------------------
              ------------
@@ -318,7 +318,7 @@ line level    source
              -h >> 4) & 0x01) * 0x04));
  295   2      
  296   2      
-C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 01:23:28 PAGE 6   
+C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 19:05:40 PAGE 6   
 
  297   2                      (*(unsigned char volatile xdata*)(PWM1_CCMR1_ADDR + (pwmch >> 4))) |= 0x06 << 4;        
  298   2                      (*(unsigned char volatile xdata*)(PWM1_CCMR1_ADDR + (pwmch >> 4))) |= 1 << 3;           //PWM模式2
@@ -382,7 +382,7 @@ line level    source
  354   1      }
  355          
  356          //--------------------------------------------------------------------------------------------------------
-C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 01:23:28 PAGE 7   
+C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 19:05:40 PAGE 7   
 
              ------------
  357          //  @brief      PWM调整频率和占空比
@@ -446,7 +446,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    XDATA SIZE       =   ----      25
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
-C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 01:23:28 PAGE 8   
+C51 COMPILER V9.60.0.0   PWM                                                               01/08/2021 19:05:40 PAGE 8   
 
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

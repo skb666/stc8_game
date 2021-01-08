@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   HARDIIC                                                           01/08/2021 01:23:25 PAGE 1   
+C51 COMPILER V9.60.0.0   HARDIIC                                                           01/08/2021 19:05:39 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE HARDIIC
 OBJECT MODULE PLACED IN .\Out_File\hardiic.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\hardiic.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\L
-                    -ibraries) DEBUG OBJECTEXTEND PRINT(.\hardiic.lst) OBJECT(.\Out_File\hardiic.obj)
+                    -ibraries;..\User) DEBUG OBJECTEXTEND PRINT(.\hardiic.lst) OBJECT(.\Out_File\hardiic.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52          // 参数: none.
   53          // 返回: 0，接收到应答信号; 1，没有接收到应答信号.
   54          //========================================================================
-C51 COMPILER V9.60.0.0   HARDIIC                                                           01/08/2021 01:23:25 PAGE 2   
+C51 COMPILER V9.60.0.0   HARDIIC                                                           01/08/2021 19:05:39 PAGE 2   
 
   55          uint8 hardiic_wait_ack()
   56          {
@@ -126,7 +126,7 @@ line level    source
  114          // 描述: IIC读取n个字节数据.
  115          // 参数: 设备地址（8位模式，7位地址需要左移一位），寄存器地址，缓存数据地址，数量
  116          // 返回: none.
-C51 COMPILER V9.60.0.0   HARDIIC                                                           01/08/2021 01:23:25 PAGE 3   
+C51 COMPILER V9.60.0.0   HARDIIC                                                           01/08/2021 19:05:39 PAGE 3   
 
  117          //========================================================================
  118          void hardiic_read_nbyte(uint8 device_addr, uint8 reg_addr, uint8 *p, uint8 number)

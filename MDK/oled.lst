@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 1   
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE OLED
 OBJECT MODULE PLACED IN .\Out_File\oled.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\oled.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\Libr
-                    -aries) DEBUG OBJECTEXTEND PRINT(.\oled.lst) OBJECT(.\Out_File\oled.obj)
+                    -aries;..\User) DEBUG OBJECTEXTEND PRINT(.\oled.lst) OBJECT(.\Out_File\oled.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52              {0x3E, 0x51, 0x49, 0x45, 0x3E},
   53              {0x00, 0x42, 0x7F, 0x40, 0x00},
   54              {0x72, 0x49, 0x49, 0x49, 0x46},
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 2   
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 2   
 
   55              {0x21, 0x41, 0x49, 0x4D, 0x33},
   56              {0x18, 0x14, 0x12, 0x7F, 0x10},
@@ -126,7 +126,7 @@ line level    source
  114              {0x7C, 0x08, 0x04, 0x04, 0x78},
  115              {0x38, 0x44, 0x44, 0x44, 0x38},
  116              {0xFC, 0x18, 0x24, 0x24, 0x18},
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 3   
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 3   
 
  117              {0x18, 0x24, 0x24, 0x18, 0xFC},
  118              {0x7C, 0x08, 0x04, 0x04, 0x08},
@@ -190,7 +190,7 @@ line level    source
  176              {0x2F, 0x10, 0x28, 0x34, 0xFA},
  177              {0x00, 0x00, 0x7B, 0x00, 0x00},
  178              {0x08, 0x14, 0x2A, 0x14, 0x22},
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 4   
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 4   
 
  179              {0x22, 0x14, 0x2A, 0x14, 0x08},
  180              {0xAA, 0x00, 0x55, 0x00, 0xAA},
@@ -254,7 +254,7 @@ line level    source
  238              {0x30, 0x4A, 0x4D, 0x4D, 0x30},
  239              {0x30, 0x48, 0x78, 0x48, 0x30},
  240              {0xBC, 0x62, 0x5A, 0x46, 0x3D},
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 5   
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 5   
 
  241              {0x3E, 0x49, 0x49, 0x49, 0x00},
  242              {0x7E, 0x01, 0x01, 0x01, 0x7E},
@@ -318,7 +318,7 @@ line level    source
  300                  0x44,0x44,0x84,0x04,0x04,0x84,0x44,0x44,0x44,0x84,0x04,0x04,0x04,0x04,0x06,0x06,
  301                  0x06,0x06,0x07,0x07,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
  302                  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 6   
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 6   
 
  303                  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
  304                  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
@@ -382,7 +382,7 @@ line level    source
  362   1      }
  363          
  364          //========================================================================
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 7   
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 7   
 
  365          // 描述: OLED模块写一个字节.
  366          // 参数: dat:要写入的字节 ; cmd:写入的字节是数据（1）还是命令（0）
@@ -446,7 +446,7 @@ line level    source
  424   1              {
  425   2                      for(x=0;x<128;x++)
  426   2                      {
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 8   
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 8   
 
  427   3                              _oled_disbuffer[x][y]=0x00;
  428   3                      }
@@ -510,7 +510,7 @@ line level    source
  486   1          if (x > OLED_MAX_COLUMN || y > OLED_MAX_ROW) {
  487   2              return;
  488   2          }
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 9   
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 9   
 
  489   1          else
  490   1          {
@@ -574,7 +574,7 @@ line level    source
  548          //      for(ci=0;ci<5;ci++){
  549          //              x1 = x+ci+i*5;
  550          //              if(x1>122){x1=x1-122;y1=y+1;}
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 10  
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 10  
 
  551          //              _oled_disbuffer[x1][y1]=fontx[chr][ci];
  552          //      }
@@ -638,7 +638,7 @@ line level    source
  610          //                              continue;
  611          //                      }else enshow=1; 
  612          //              }
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 11  
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 11  
 
  613          //              oled_show_char(x+5*t,y,temp+'0'); 
  614          //      }
@@ -702,7 +702,7 @@ line level    source
  671   3              }
  672   2          }
  673   1          else
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 12  
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 12  
 
  674   1          {
  675   2              for (zz = 0; zz < lenth; zz++) {
@@ -766,7 +766,7 @@ line level    source
  730          //========================================================================
  731          // 描述: 显示24*24汉字
  732          // 参数: 参数: x,y:起点坐标;lenth:要显示的汉字长度;hz:字库数组
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 13  
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 13  
 
  733          // 返回: none.
  734          //========================================================================
@@ -830,7 +830,7 @@ line level    source
  790   5                          if ((zz * 32 + j + x - 32) > 127)return;
  791   5                          if ((y + i - 32) > 63)return;
  792   5                          if (!((zz * 32 + x + j) < 0))
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 14  
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 14  
 
  793   5                              if ((hz[zz * 128 + j * 4 + i / 8]) & (0x80 >> (i % 8)))oled_set_pixel(zz * 32 + x 
              -+ j, y + i, 1);
@@ -894,7 +894,7 @@ line level    source
  850   1              oled_wr_byte(0xff,OLED_CMD);
  851   1      
  852   1              oled_wr_byte(0xa1,OLED_CMD);//段重定向设置
-C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 01:23:25 PAGE 15  
+C51 COMPILER V9.60.0.0   OLED                                                              01/08/2021 19:05:39 PAGE 15  
 
  853   1      
  854   1              oled_wr_byte(0xa6,OLED_CMD);//

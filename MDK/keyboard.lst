@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   KEYBOARD                                                          01/08/2021 01:23:25 PAGE 1   
+C51 COMPILER V9.60.0.0   KEYBOARD                                                          01/08/2021 19:05:39 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE KEYBOARD
 OBJECT MODULE PLACED IN .\Out_File\keyboard.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\keyboard.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\
-                    -Libraries) DEBUG OBJECTEXTEND PRINT(.\keyboard.lst) OBJECT(.\Out_File\keyboard.obj)
+                    -Libraries;..\User) DEBUG OBJECTEXTEND PRINT(.\keyboard.lst) OBJECT(.\Out_File\keyboard.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52   4                  }
   53   3                  if(F0){
   54   4                      j = T_KeyTable[IO_KeyState >> 4];
-C51 COMPILER V9.60.0.0   KEYBOARD                                                          01/08/2021 01:23:25 PAGE 2   
+C51 COMPILER V9.60.0.0   KEYBOARD                                                          01/08/2021 19:05:39 PAGE 2   
 
   55   4                      if((j != 0) && (T_KeyTable[IO_KeyState & 0x0f] != 0)) 
   56   4                          KeyCode = (j - 1) * 4 + T_KeyTable[IO_KeyState & 0x0f];    //¼ÆËã¼üÂë£¬1~16

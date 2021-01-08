@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   MATRIX                                                            01/08/2021 01:23:25 PAGE 1   
+C51 COMPILER V9.60.0.0   MATRIX                                                            01/08/2021 19:05:39 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MATRIX
 OBJECT MODULE PLACED IN .\Out_File\matrix.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\matrix.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\Li
-                    -braries) DEBUG OBJECTEXTEND PRINT(.\matrix.lst) OBJECT(.\Out_File\matrix.obj)
+                    -braries;..\User) DEBUG OBJECTEXTEND PRINT(.\matrix.lst) OBJECT(.\Out_File\matrix.obj)
 
 line level    source
 
@@ -63,7 +63,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
-C51 COMPILER V9.60.0.0   MATRIX                                                            01/08/2021 01:23:25 PAGE 2   
+C51 COMPILER V9.60.0.0   MATRIX                                                            01/08/2021 19:05:39 PAGE 2   
 
 
 C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

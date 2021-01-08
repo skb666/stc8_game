@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   TIMER                                                             01/08/2021 01:23:24 PAGE 1   
+C51 COMPILER V9.60.0.0   TIMER                                                             01/08/2021 19:05:38 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE TIMER
 OBJECT MODULE PLACED IN .\Out_File\timer.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Libraries\timer.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\
-                    -Libraries) DEBUG OBJECTEXTEND PRINT(.\timer.lst) OBJECT(.\Out_File\timer.obj)
+                    -Libraries;..\User) DEBUG OBJECTEXTEND PRINT(.\timer.lst) OBJECT(.\Out_File\timer.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   51          void    Timer1_init(void)
   52          {
   53   1              TR1 = 0;    //停止计数
-C51 COMPILER V9.60.0.0   TIMER                                                             01/08/2021 01:23:24 PAGE 2   
+C51 COMPILER V9.60.0.0   TIMER                                                             01/08/2021 19:05:38 PAGE 2   
 
   54   1      
   55   1          #if (Timer1_Reload < 64)    // 如果用户设置值不合适， 则不启动定时器
@@ -126,7 +126,7 @@ line level    source
  113   1      
  114   1                  AUXR |=  (1<<4);    //开始运行
  115   1      
-C51 COMPILER V9.60.0.0   TIMER                                                             01/08/2021 01:23:24 PAGE 3   
+C51 COMPILER V9.60.0.0   TIMER                                                             01/08/2021 19:05:38 PAGE 3   
 
  116   1          #else
                       #error "Timer2设置的中断过慢!"
@@ -190,7 +190,7 @@ line level    source
  175   1          //  T4T3M &= ~0x10;     //不输出时钟
  176   1      
  177   1              #if (Timer4_Reload < 65536UL)
-C51 COMPILER V9.60.0.0   TIMER                                                             01/08/2021 01:23:24 PAGE 4   
+C51 COMPILER V9.60.0.0   TIMER                                                             01/08/2021 19:05:38 PAGE 4   
 
  178   1                  T4T3M |=  (1<<5);    //1T mode
  179   1                  T4H = (uint8)((65536UL - Timer4_Reload) / 256);

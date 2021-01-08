@@ -78,16 +78,16 @@ void tft_lcd_show_font32(uint8 lenth, uint8 *hz, int16 x, int16 y,uint16 font_co
 void tft_lcd_draw_bmp16(uint16 x0,uint16 y0,uint16 w,uint16 h,const uint8 *p);	//显示bmp图像
 
 //颜色
-#define TFT_LCD_WHITE         	 0xFFFF
-#define TFT_LCD_BLACK         	 0x0000	  
-#define TFT_LCD_BLUE             0x001F  
-#define TFT_LCD_BRED             0XF81F
-#define TFT_LCD_GBLUE            0X07FF
-#define TFT_LCD_RED           	 0xF800
-#define TFT_LCD_MAGENTA       	 0xF81F
-#define TFT_LCD_GREEN         	 0x07E0
-#define TFT_LCD_CYAN          	 0x7FFF
-#define TFT_LCD_YELLOW        	 0xFFE0
+#define TFT_LCD_WHITE         	 0xFFFF //白色
+#define TFT_LCD_BLACK         	 0x0000 //黑色
+#define TFT_LCD_BLUE             0x001F //蓝色
+#define TFT_LCD_BRED             0XF81F //紫色
+#define TFT_LCD_GBLUE            0X07FF //蓝绿色
+#define TFT_LCD_RED           	 0xF800 //红色
+#define TFT_LCD_MAGENTA       	 0xF81F //粉色
+#define TFT_LCD_GREEN         	 0x07E0 //绿色
+#define TFT_LCD_CYAN          	 0x7FFF //青色
+#define TFT_LCD_YELLOW        	 0xFFE0 //黄色
 #define TFT_LCD_BROWN            0XBC40 //棕色
 #define TFT_LCD_BRRED            0XFC07 //棕红色
 #define TFT_LCD_GRAY             0X8430 //灰色

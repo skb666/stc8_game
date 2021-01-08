@@ -1,172 +1,87 @@
-C51 COMPILER V9.60.0.0   MAIN                                                              01/08/2021 13:03:49 PAGE 1   
+C51 COMPILER V9.60.0.0   MAIN                                                              01/08/2021 19:05:38 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN .\Out_File\main.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\User\main.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\Librar
-                    -ies) DEBUG OBJECTEXTEND PRINT(.\main.lst) OBJECT(.\Out_File\main.obj)
+                    -ies;..\User) DEBUG OBJECTEXTEND PRINT(.\main.lst) OBJECT(.\Out_File\main.obj)
 
 line level    source
 
-   1          #include <stdio.h>
-   2          #include <stdlib.h>
-   3          #include <string.h>
-   4          #include "sys.h"
-   5          #include "delay.h"
-   6          #include "timer.h"
-   7          #include "led8.h"
-   8          #include "matrix.h"
-   9          #include "nixietube.h"
-  10          #include "hc595.h"
-  11          #include "keyboard.h"
-  12          #include "lcd1602.h"
-  13          #include "oled.h"
-  14          #include "dht11.h"
-  15          #include "tftlcd.h"
-  16          #include "gui.h"
-  17          #include "touch.h"
-  18          #include "ir.h"
-  19          #include "pcf8563.h"
-  20          
-  21          uint8 B_100us = 0;
-  22          uint16 tim0_ms = 50;
-  23          
-  24          uint16 data2048[4][4];
-  25          int score, best;
-  26          uint8 str_2048[] = {
-  27              0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-  28              0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x07,0xF8,0x00,0x00,0x1C,0x3C,0x00,
-  29              0x00,0x38,0x1E,0x00,0x00,0x3C,0x1E,0x00,0x00,0x3C,0x1E,0x00,0x00,0x3C,0x1E,0x00,
-  30              0x00,0x00,0x1E,0x00,0x00,0x00,0x1C,0x00,0x00,0x00,0x3C,0x00,0x00,0x00,0x38,0x00,
-  31              0x00,0x00,0x70,0x00,0x00,0x00,0xE0,0x00,0x00,0x01,0xC0,0x00,0x00,0x03,0x80,0x00,
-  32              0x00,0x07,0x00,0x00,0x00,0x06,0x00,0x00,0x00,0x0C,0x06,0x00,0x00,0x18,0x0C,0x00,
-  33              0x00,0x30,0x0C,0x00,0x00,0x3F,0xFC,0x00,0x00,0x3F,0xFC,0x00,0x00,0x00,0x00,0x00,
-  34              0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,/*２*/
-  35              0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-  36              0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x07,0xF0,0x00,0x00,0x0E,0x38,0x00,
-  37              0x00,0x1C,0x38,0x00,0x00,0x1C,0x1C,0x00,0x00,0x1C,0x1C,0x00,0x00,0x38,0x1C,0x00,
-  38              0x00,0x38,0x1C,0x00,0x00,0x38,0x1C,0x00,0x00,0x38,0x1C,0x00,0x00,0x38,0x1C,0x00,
-  39              0x00,0x38,0x1C,0x00,0x00,0x38,0x1C,0x00,0x00,0x38,0x1C,0x00,0x00,0x38,0x1C,0x00,
-  40              0x00,0x38,0x1C,0x00,0x00,0x38,0x1C,0x00,0x00,0x1C,0x1C,0x00,0x00,0x1C,0x18,0x00,
-  41              0x00,0x1C,0x38,0x00,0x00,0x0E,0x70,0x00,0x00,0x07,0xE0,0x00,0x00,0x00,0x00,0x00,
-  42              0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,/*０*/
-  43              0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-  44              0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x00,0x00,0x00,0x70,0x00,
-  45              0x00,0x00,0x70,0x00,0x00,0x00,0xF0,0x00,0x00,0x01,0xF0,0x00,0x00,0x03,0xF0,0x00,
-  46              0x00,0x03,0x70,0x00,0x00,0x06,0x70,0x00,0x00,0x0E,0x70,0x00,0x00,0x0C,0x70,0x00,
-  47              0x00,0x18,0x70,0x00,0x00,0x38,0x70,0x00,0x00,0x70,0x70,0x00,0x00,0x60,0x70,0x00,
-  48              0x00,0xFF,0xFF,0x00,0x00,0xFF,0xFF,0x00,0x00,0x00,0x70,0x00,0x00,0x00,0x70,0x00,
-  49              0x00,0x00,0x70,0x00,0x00,0x00,0xF8,0x00,0x00,0x03,0xFF,0x00,0x00,0x00,0x00,0x00,
-  50              0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,/*４*/
-  51              0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-  52              0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x07,0xF0,0x00,0x00,0x0E,0x1C,0x00,
-  53              0x00,0x1C,0x0C,0x00,0x00,0x1C,0x0C,0x00,0x00,0x3C,0x0E,0x00,0x00,0x3C,0x0C,0x00,
-  54              0x00,0x1C,0x1C,0x00,0x00,0x1E,0x38,0x00,0x00,0x0F,0xF0,0x00,0x00,0x03,0xE0,0x00,
-C51 COMPILER V9.60.0.0   MAIN                                                              01/08/2021 13:03:49 PAGE 2   
+   1          #include "main.h"
+   2          #include "game_2048.h"
+   3          
+   4          uint8 B_100us = 0;
+   5          uint16 tim0_ms = 50;
+   6          uint8 sign_ir = 0;
+   7          
+   8          void main(void){
+   9   1          pcf8563_Time localtime;
+  10   1          
+  11   1          // 时钟初始化
+  12   1              InitMCU();
+  13   1          Timer0_init();
+  14   1          Timer4_init();
+  15   1          EA = 1;             // 中断总开关
+  16   1          
+  17   1          // 硬件初始化
+  18   1          pcf8563_init();
+  19   1          ir_rx_init();
+  20   1          tft_lcd_init();
+  21   1          
+  22   1          // 用RTC时间初始化随机数种子
+  23   1          pcf8563_read_rtc(&localtime);
+  24   1          srand(((long *)&localtime)[0]+((long *)&localtime)[1]);
+  25   1          
+  26   1          // 游戏初始化
+  27   1          game2048_init();
+  28   1          
+  29   1          while(1){
+  30   2              // 矩阵键盘输入
+  31   2              if(IO_KeyState){
+  32   3                  // 红外发送
+  33   3                  //ir_send_nec(1, KEY_MAP[KeyCode]);
+  34   3                  while(IO_KeyState);
+  35   3              }
+  36   2              // 红外输入
+  37   2              if(B_100us){
+  38   3                  B_100us = 0;
+  39   3                  if(ir_rx_available()){
+  40   4                      // 红外接收
+  41   4                      sign_ir = ir_rx_ircode();
+  42   4                  }
+  43   3              }
+  44   2              // 运行2048
+  45   2              game2048_run();
+  46   2              if(sign_ir){
+  47   3                  game2048_updateStatus(sign_ir);
+  48   3                  sign_ir = 0;
+  49   3              }
+  50   2          }
+  51   1      }
+  52          
+  53          // 1ms
+  54          void Timer0_interrupt(void) interrupt 1{
+C51 COMPILER V9.60.0.0   MAIN                                                              01/08/2021 19:05:38 PAGE 2   
 
-  55              0x00,0x07,0xF8,0x00,0x00,0x0E,0x7C,0x00,0x00,0x18,0x3E,0x00,0x00,0x38,0x1E,0x00,
-  56              0x00,0x30,0x0E,0x00,0x00,0x30,0x0E,0x00,0x00,0x30,0x0E,0x00,0x00,0x38,0x0E,0x00,
-  57              0x00,0x1C,0x1C,0x00,0x00,0x0F,0x78,0x00,0x00,0x01,0xC0,0x00,0x00,0x00,0x00,0x00,
-  58              0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,/*８*/
-  59          };
-  60          
-  61          void setdata(){
-  62   1          uint8 i, j;
-  63   1          for(i=0; i<4; ++i){
-  64   2              for(j=0; j<4; ++j){
-  65   3                  data2048[i][j] = 16 << i << j;
-  66   3              }
-  67   2          }
-  68   1          score = best = 0;
-  69   1      }
-  70          
-  71          // 字符：0   1   2   3   4   5   6   7   8   9   #   *   w(+) s(/) a(-) d(x) ok
-  72          // IR  ：13  0   1   2   4   5   6   8   9   10  14  12  17   25   20   22   21
-  73          // 按键：0   1   2   3   4   5   6   7   8   9   35  42  43   47   45   120  -
-  74          void main(void){
-  75   1          uint8 buf[50], slen;
-  76   1          uint8 i, j;
-  77   1          pcf8563_Time localtime;
-  78   1          
-  79   1              InitMCU();
-  80   1          Timer0_init();
-  81   1          Timer4_init();
-  82   1          EA = 1;             // 中断总开关
-  83   1          
-  84   1          pcf8563_init();
-  85   1          ir_rx_init();
-  86   1          tft_lcd_init();
-  87   1          tft_lcd_clear(TFT_LCD_LGRAY);
-  88   1          
-  89   1          pcf8563_read_rtc(&localtime);
-  90   1          srand(((long *)&localtime)[0]+((long *)&localtime)[1]);
-  91   1          
-  92   1          setdata();
-  93   1          tft_lcd_show_font32(4,str_2048,56,8,TFT_LCD_BRED,TFT_LCD_WHITE,1);
-  94   1          tft_lcd_show_string(36,300,"Join the tiles, get to 2048!",TFT_LCD_GRAY,TFT_LCD_WHITE,12,1);
-  95   1          tft_lcd_draw_rectangle(19, 91, 221, 293, TFT_LCD_BLACK);
-  96   1          tft_lcd_fill_rectangle(20, 92, 220, 292, TFT_LCD_LGRAYBLUE);
-  97   1          tft_lcd_draw_rectangle(150, 55, 220, 79, TFT_LCD_BLACK);
-  98   1          tft_lcd_fill_rectangle(151, 56, 219, 78, TFT_LCD_LBBLUE);
-  99   1          tft_lcd_show_string(161,61,"New Game",TFT_LCD_WHITE,TFT_LCD_WHITE,12,1);
- 100   1          for(i=0; i<5; ++i){
- 101   2              tft_lcd_draw_line(20, 92+50*i, 220, 92+50*i, TFT_LCD_GRAYBLUE);
- 102   2              tft_lcd_draw_line(20+50*i, 92, 20+50*i, 292, TFT_LCD_GRAYBLUE);
- 103   2          }
- 104   1          
- 105   1          while(1){
- 106   2              if(IO_KeyState){
- 107   3                  ir_send_nec(1, KEY_MAP[KeyCode]);
- 108   3                  while(IO_KeyState);
- 109   3              }
- 110   2              if(B_100us){
- 111   3                  B_100us = 0;
- 112   3                  if(ir_rx_available()){
- 113   4      //                switch(ir_rx_ircode()){
- 114   4      //                    case 21:
- 115   4      //                        tft_lcd_show_string(50,50,"yes!!!",TFT_LCD_RED,TFT_LCD_WHITE,16,0);
- 116   4      //                        break;
-C51 COMPILER V9.60.0.0   MAIN                                                              01/08/2021 13:03:49 PAGE 3   
-
- 117   4      //                    default:
- 118   4      //                        sprintf(buf, "%3d", (int)ir_rx_ircode());
- 119   4      //                        tft_lcd_show_string(50,50,buf,TFT_LCD_RED,TFT_LCD_WHITE,16,0);
- 120   4      //                }
- 121   4                  }
- 122   3              }
- 123   2              sprintf(buf, "Best :%7d", best);
- 124   2              tft_lcd_show_string(20,50,buf,TFT_LCD_BRRED,TFT_LCD_WHITE,16,1);
- 125   2              sprintf(buf, "Score:%7d", score);
- 126   2              tft_lcd_show_string(20,68,buf,TFT_LCD_BRRED,TFT_LCD_WHITE,16,1);
- 127   2              for(i=0; i<4; ++i){
- 128   3                  for(j=0; j<4; ++j){
- 129   4                      sprintf(buf, "%d", (int)data2048[i][j]);
- 130   4                      slen = strlen(buf);
- 131   4                      tft_lcd_draw_rectangle(22+j*50, 94+i*50, 68+j*50, 140+i*50, TFT_LCD_LIGHTBLUE);
- 132   4                      tft_lcd_show_string(45+50*j-4*slen,109+50*i,buf,TFT_LCD_DARKBLUE,TFT_LCD_WHITE,16,1);
- 133   4                  }
- 134   3              }
- 135   2          }
- 136   1      }
- 137          
- 138          void Timer0_interrupt(void) interrupt 1{
- 139   1          static int cnt = 0;
- 140   1          cnt = (cnt + 1) % tim0_ms;
- 141   1          if(cnt == tim0_ms - 1){
- 142   2              IO_KeyScan();
- 143   2          }
- 144   1      }
- 145          
- 146          void Timer4_interrupt(void) interrupt 20{
- 147   1          ir_rec_callback();//红外接收回调函数
- 148   1          B_100us = 1;
- 149   1      }
+  55   1          static int cnt = 0;
+  56   1          cnt = (cnt + 1) % tim0_ms;
+  57   1          if(cnt == tim0_ms - 1){
+  58   2              IO_KeyScan();
+  59   2          }
+  60   1      }
+  61          
+  62          // 0.1ms
+  63          void Timer4_interrupt(void) interrupt 20{
+  64   1          ir_rec_callback();      //红外接收回调函数
+  65   1          B_100us = 1;
+  66   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1202    ----
-   CONSTANT SIZE    =     61    ----
-   XDATA SIZE       =   1065      62
+   CODE SIZE        =    295    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =    518       8
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

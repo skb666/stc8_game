@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   GUI                                                               01/08/2021 01:23:27 PAGE 1   
+C51 COMPILER V9.60.0.0   GUI                                                               01/08/2021 19:05:40 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE GUI
 OBJECT MODULE PLACED IN .\Out_File\gui.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\gui.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\Libra
-                    -ries) DEBUG OBJECTEXTEND PRINT(.\gui.lst) OBJECT(.\Out_File\gui.obj)
+                    -ries;..\User) DEBUG OBJECTEXTEND PRINT(.\gui.lst) OBJECT(.\Out_File\gui.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52          //min:分钟
   53          //sec:秒钟
   54          void calendar_circle_clock_showtime(uint16 x,uint16 y,uint16 size,uint16 d,uint8 hour,uint8 min,uint8 sec)
-C51 COMPILER V9.60.0.0   GUI                                                               01/08/2021 01:23:27 PAGE 2   
+C51 COMPILER V9.60.0.0   GUI                                                               01/08/2021 19:05:40 PAGE 2   
 
   55          {
   56   1              static uint8 oldhour=0; //最近一次进入该函数的时分秒信息
@@ -126,7 +126,7 @@ line level    source
  114   1              px1=sx+r+r1*sin((app_pi/30)*temp); 
  115   1              py1=sy+r-r1*cos((app_pi/30)*temp); 
  116   1              tft_lcd_draw_line1(px0,py0,px1,py1,1, TFT_LCD_GREEN);
-C51 COMPILER V9.60.0.0   GUI                                                               01/08/2021 01:23:27 PAGE 3   
+C51 COMPILER V9.60.0.0   GUI                                                               01/08/2021 19:05:40 PAGE 3   
 
  117   1              //显示秒钟
  118   1              r1=d/2+3;
@@ -190,7 +190,7 @@ line level    source
  176   3                              c2 = c2 - size * 5;
  177   3                              tft_lcd_draw_circle(px0, c2, 1, TFT_LCD_WHITE, 1);
  178   3                              
-C51 COMPILER V9.60.0.0   GUI                                                               01/08/2021 01:23:27 PAGE 4   
+C51 COMPILER V9.60.0.0   GUI                                                               01/08/2021 19:05:40 PAGE 4   
 
  179   3                      }
  180   2                      c1 = y;
@@ -254,7 +254,7 @@ line level    source
  238   2                      tft_lcd_draw_point((u16)y+161,i);
  239   2                      tft_lcd_draw_point((u16)y+160,i);
  240   2                      tft_lcd_draw_point((u16)y+159,i);
-C51 COMPILER V9.60.0.0   GUI                                                               01/08/2021 01:23:27 PAGE 5   
+C51 COMPILER V9.60.0.0   GUI                                                               01/08/2021 19:05:40 PAGE 5   
 
  241   2      
  242   2                      k = 30*cos(i/20.0);

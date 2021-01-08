@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 1   
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE TFTLCD
 OBJECT MODULE PLACED IN .\Out_File\tftlcd.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\tftlcd.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\Li
-                    -braries) DEBUG OBJECTEXTEND PRINT(.\tftlcd.lst) OBJECT(.\Out_File\tftlcd.obj)
+                    -braries;..\User) DEBUG OBJECTEXTEND PRINT(.\tftlcd.lst) OBJECT(.\Out_File\tftlcd.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52          {0x00,0x00,0x0F,0x12,0x12,0x0E,0x02,0x02,0x02,0x07,0x00,0x00},/*"P",48*/
   53          {0x00,0x00,0x0E,0x11,0x11,0x11,0x11,0x17,0x19,0x0E,0x18,0x00},/*"Q",49*/
   54          {0x00,0x00,0x0F,0x12,0x12,0x0E,0x0A,0x12,0x12,0x37,0x00,0x00},/*"R",50*/
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 2   
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 2   
 
   55          {0x00,0x00,0x1E,0x11,0x01,0x06,0x08,0x10,0x11,0x0F,0x00,0x00},/*"S",51*/
   56          {0x00,0x00,0x1F,0x15,0x04,0x04,0x04,0x04,0x04,0x0E,0x00,0x00},/*"T",52*/
@@ -126,7 +126,7 @@ line level    source
  114          {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x06,0x06,0x04,0x03},/*",",12*/
  115          {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFE,0x00,0x00,0x00,0x00,0x00,0x00,0x00},/*"-",13*/
  116          {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x06,0x06,0x00,0x00},/*".",14*/
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 3   
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 3   
 
  117          {0x00,0x00,0x80,0x40,0x40,0x20,0x20,0x10,0x10,0x08,0x08,0x04,0x04,0x02,0x02,0x00},/*"/",15*/
  118          {0x00,0x00,0x00,0x18,0x24,0x42,0x42,0x42,0x42,0x42,0x42,0x42,0x24,0x18,0x00,0x00},/*"0",16*/
@@ -190,7 +190,7 @@ line level    source
  176          {0x00,0x00,0x00,0x30,0x30,0x00,0x00,0x38,0x20,0x20,0x20,0x20,0x20,0x20,0x22,0x1E},/*"j",74*/
  177          {0x00,0x00,0x00,0x03,0x02,0x02,0x02,0x72,0x12,0x0A,0x16,0x12,0x22,0x77,0x00,0x00},/*"k",75*/
  178          {0x00,0x00,0x00,0x0E,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x08,0x3E,0x00,0x00},/*"l",76*/
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 4   
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 4   
 
  179          {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x7F,0x92,0x92,0x92,0x92,0x92,0xB7,0x00,0x00},/*"m",77*/
  180          {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x3B,0x46,0x42,0x42,0x42,0x42,0xE7,0x00,0x00},/*"n",78*/
@@ -254,7 +254,7 @@ line level    source
  238          // 返回: 读取到的16位数据.
  239          //========================================================================
  240          uint16 tft_lcd_read()
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 5   
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 5   
 
  241          {
  242   1              uint16 d;
@@ -318,7 +318,7 @@ line level    source
  300          // 描述: LCD写入16位数据.
  301          // 参数: Data:写入的数据.
  302          // 返回: none.
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 6   
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 6   
 
  303          //========================================================================
  304          void tft_lcd_wr_data_16bit(uint16 Data)
@@ -382,7 +382,7 @@ line level    source
  362   1              b = TFT_LCD_DATAPORTH;
  363   1              b = (b<<8);
  364   1              TFT_LCD_RD = 1;
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 7   
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 7   
 
  365   1              r >>= 8;
  366   1              g >>= 8;
@@ -446,7 +446,7 @@ line level    source
  424          // 描述: LCD读GRAM.
  425          // 参数: none.
  426          // 返回: none.
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 8   
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 8   
 
  427          //========================================================================
  428          void tft_lcd_readram_prepare()
@@ -510,7 +510,7 @@ line level    source
  486   1      
  487   1              return color;
  488   1      }
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 9   
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 9   
 
  489          
  490          //========================================================================
@@ -574,7 +574,7 @@ line level    source
  548   1              tft_lcd_wr_data(0X12); 
  549   1              tft_lcd_wr_data(0X81); 
  550   1      
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 10  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 10  
 
  551   1              tft_lcd_wr_reg(0xE8);           //Driver Timing A [04 11 7A]
  552   1              tft_lcd_wr_data(0x85); 
@@ -638,7 +638,7 @@ line level    source
  610   1              tft_lcd_wr_data(0x0F); 
  611   1              tft_lcd_wr_data(0x26); 
  612   1              tft_lcd_wr_data(0x24); 
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 11  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 11  
 
  613   1              tft_lcd_wr_data(0x0B); 
  614   1              tft_lcd_wr_data(0x0E); 
@@ -702,7 +702,7 @@ line level    source
  672          {
  673   1              tft_lcd_wr_reg(lcddev.setxcmd);
  674   1              tft_lcd_wr_data(x0 >> 8);
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 12  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 12  
 
  675   1              tft_lcd_wr_data(0x00FF & x0);
  676   1              tft_lcd_wr_data(x1 >> 8);
@@ -766,7 +766,7 @@ line level    source
  734   2                      if(lcddev.id == 0x9341 | lcddev.id == 0x9340)
  735   2                              tft_lcd_writereg(0x36, (1 << 3) | (1 << 5));
  736   2                      else tft_lcd_writereg(0x36, (0 << 3) | (1 << 5)); 
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 13  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 13  
 
  737   2                      break;
  738   2              default:break;
@@ -830,7 +830,7 @@ line level    source
  796   1              else distance = delta_y;
  797   1              for (t = 0; t <= distance + 1; t++)//画线输出 
  798   1              {
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 14  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 14  
 
  799   2                      tft_lcd_draw_point(uRow, uCol);//画点 
  800   2                      xerr += delta_x;
@@ -894,7 +894,7 @@ line level    source
  858   3                              tft_lcd_draw_point(uRow-1,uCol+1);
  859   3                              tft_lcd_draw_point(uRow+1,uCol-1);
  860   3                              tft_lcd_draw_point(uRow-1,uCol-1);
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 15  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 15  
 
  861   3                              tft_lcd_draw_point(uRow-1,uCol);
  862   3                              tft_lcd_draw_point(uRow,uCol-1);
@@ -958,7 +958,7 @@ line level    source
  920          void tft_draw_circle_8(int xc, int yc, int x, int y, uint16 color)
  921          {
  922   1              tft_gui_drawpoint(xc + x, yc + y, color);
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 16  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 16  
 
  923   1      
  924   1              tft_gui_drawpoint(xc - x, yc + y, color);
@@ -1022,7 +1022,7 @@ line level    source
  982   1      }
  983          
  984          //========================================================================
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 17  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 17  
 
  985          // 描述: 在指定位置绘制一个三角形.
  986          // 参数: x0,y0,x1,y1,x2,y2:三角形三个端点的坐标; color:颜色
@@ -1086,7 +1086,7 @@ line level    source
 1044   3                              b = x1;
 1045   3                      }
 1046   2                      if (x2 < a)
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 18  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 18  
 
 1047   2                      {
 1048   3                              a = x2;
@@ -1150,7 +1150,7 @@ line level    source
 1106          void tft_lcd_show_char(int16 x,int16 y, uint8 chr, uint16 font_color, uint16 background_color, uint8 msize
              -,uint8 mode)
 1107          {  
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 19  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 19  
 
 1108   1              uint8 temp;
 1109   1              uint8 j,i;
@@ -1214,7 +1214,7 @@ line level    source
 1167   6                                              }
 1168   5                                      }
 1169   4                                      temp>>=1; 
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 20  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 20  
 
 1170   4                          }
 1171   3                      }       
@@ -1278,7 +1278,7 @@ line level    source
 1226          //      }
 1227          // }
 1228          
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 21  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 21  
 
 1229          //========================================================================
 1230          // 描述: 在指定位置显示数字.
@@ -1342,7 +1342,7 @@ line level    source
 1285   4                              }
 1286   3                      }
 1287   2              }
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 22  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 22  
 
 1288   1              else
 1289   1              {
@@ -1406,7 +1406,7 @@ line level    source
 1346   6                                                      if(!mode)               //无叠加
 1347   6                                                      {
 1348   7                                                              if(hz[zz*32+i * 2 + j/8] & (0x80 >> (j % 8))){
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 23  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 23  
 
 1349   8                                                                      tft_lcd_set_cursor(zz * 16+ x + j,y + i);
 1350   8                                                                      tft_lcd_wr_data_16bit(font_color);
@@ -1470,7 +1470,7 @@ line level    source
 1408          // 返回: none.
 1409          //========================================================================
 1410          void tft_lcd_show_font24(uint8 lenth, uint8 *hz, int16 x, int16 y,uint16 font_color, uint16 background_col
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 24  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 24  
 
              -or, uint8 mode)
 1411          {
@@ -1534,7 +1534,7 @@ line level    source
 1469   7                                                              tft_lcd_wr_data_16bit(background_color);
 1470   7                                                      }
 1471   6                                              }
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 25  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 25  
 
 1472   5                                              else
 1473   5                                              {
@@ -1598,7 +1598,7 @@ line level    source
 1530   1              else
 1531   1              {
 1532   2                      for(zz = 0; zz < lenth; zz++)           //要显示的字体循环
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 26  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 26  
 
 1533   2                      {
 1534   3                              tft_lcd_set_windows(x+32*zz,y,x+32*zz+32-1,y+32-1);
@@ -1662,7 +1662,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
-C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 01:23:27 PAGE 27  
+C51 COMPILER V9.60.0.0   TFTLCD                                                            01/08/2021 19:05:39 PAGE 27  
 
 END OF MODULE INFORMATION.
 

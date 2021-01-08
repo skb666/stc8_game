@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 01:23:28 PAGE 1   
+C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 19:05:40 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE TOUCH
 OBJECT MODULE PLACED IN .\Out_File\touch.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\touch.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\Lib
-                    -raries) DEBUG OBJECTEXTEND PRINT(.\touch.lst) OBJECT(.\Out_File\touch.obj)
+                    -raries;..\User) DEBUG OBJECTEXTEND PRINT(.\touch.lst) OBJECT(.\Out_File\touch.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52   2                      SM245_TOUCH_YP_PIN = 0;
   53   2                      SM245_TOUCH_YM_PIN = 0;
   54   2                      SM245_TOUCH_XM_PIN = 0;
-C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 01:23:28 PAGE 2   
+C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 19:05:40 PAGE 2   
 
   55   2                      adc_init(SM245_YP_ADC_PIN, ADC_SYSclk_DIV_2, ADC_12BIT);
   56   2                      for(i=0;i<TOUCH_READ_TIMES;i++)buf[i]=adc_read(SM245_YP_ADC_PIN);                   
@@ -126,7 +126,7 @@ line level    source
  114   3                      }        
  115   2                      sum=0;
  116   2                      for(i=TOUCH_LOST_VAL;i<TOUCH_READ_TIMES-TOUCH_LOST_VAL;i++)sum+=buf[i];
-C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 01:23:28 PAGE 3   
+C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 19:05:40 PAGE 3   
 
  117   2                      temp=sum/(TOUCH_READ_TIMES-2*TOUCH_LOST_VAL);
  118   2                      LCD9341_SET_XM_OUT;
@@ -190,7 +190,7 @@ line level    source
  176   2                      adc_init(LCD9341_XM_ADC_PIN, ADC_SYSclk_DIV_2, ADC_12BIT);
  177   2                      adc_init(LCD9341_YP_ADC_PIN, ADC_SYSclk_DIV_2, ADC_12BIT);
  178   2      
-C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 01:23:28 PAGE 4   
+C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 19:05:40 PAGE 4   
 
  179   2                      z1 = adc_read(LCD9341_XM_ADC_PIN); 
  180   2                      z2 = adc_read(LCD9341_YP_ADC_PIN);
@@ -254,7 +254,7 @@ line level    source
  238          //========================================================================
  239          // 描述: 画一个触摸点.
  240          // 参数: x,y:坐标; color:颜色值.
-C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 01:23:28 PAGE 5   
+C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 19:05:40 PAGE 5   
 
  241          // 返回: none.
  242          //========================================================================
@@ -318,7 +318,7 @@ line level    source
  300   1              tft_lcd_clear(TFT_LCD_WHITE);   //清屏   
  301   1              _tft_lcd_point_color=TFT_LCD_BLACK;
  302   1              tft_lcd_show_string(70,40,"touch adjust",TFT_LCD_RED,TFT_LCD_WHITE,16,1);//显示提示信息
-C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 01:23:28 PAGE 6   
+C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 19:05:40 PAGE 6   
 
  303   1              tp_drow_touch_point(20,20,TFT_LCD_RED);     //画点1
  304   1              tp_dev.sta=0;       //消除触发信号 
@@ -382,7 +382,7 @@ line level    source
  362   4                                              if(fac<0.95||fac>1.05||d1==0||d2==0)//不合格
  363   4                                              {
  364   5                                                      cnt=0;
-C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 01:23:28 PAGE 7   
+C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 19:05:40 PAGE 7   
 
  365   5                                              tp_drow_touch_point(lcddev.width-20,lcddev.height-20,TFT_LCD_WHITE);    //清除点4
  366   5                                                      tp_drow_touch_point(20,20,TFT_LCD_RED);                                                         //画点一 
@@ -446,7 +446,7 @@ line level    source
  424   6                                                              tp_dev.touchtype = 0;
  425   6                                                      }
  426   5                                                      //tp_dev.touchtype=!tp_dev.touchtype;//修改触屏类型                 
-C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 01:23:28 PAGE 8   
+C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 19:05:40 PAGE 8   
 
  427   5                                                      continue;
  428   5                                              }               
@@ -510,7 +510,7 @@ line level    source
  486   1              tp_read_xy2(&x,&y);
  487   1              if(lcddev.id == 0x9341)
  488   1              {
-C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 01:23:28 PAGE 9   
+C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 19:05:40 PAGE 9   
 
  489   2                      //读取X坐标
  490   2                      tspoint[0] = tp_dev.xfac*(y)+tp_dev.xoff;       
@@ -574,7 +574,7 @@ line level    source
  548          //========================================================================
  549          // 描述: 读取触摸的y坐标.
  550          // 参数: none.
-C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 01:23:28 PAGE 10  
+C51 COMPILER V9.60.0.0   TOUCH                                                             01/08/2021 19:05:40 PAGE 10  
 
  551          // 返回: 读到的坐标.
  552          //========================================================================

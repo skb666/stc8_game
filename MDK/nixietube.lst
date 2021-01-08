@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   NIXIETUBE                                                         01/08/2021 01:23:25 PAGE 1   
+C51 COMPILER V9.60.0.0   NIXIETUBE                                                         01/08/2021 19:05:39 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE NIXIETUBE
 OBJECT MODULE PLACED IN .\Out_File\nixietube.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\nixietube.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..
-                    -\Libraries) DEBUG OBJECTEXTEND PRINT(.\nixietube.lst) OBJECT(.\Out_File\nixietube.obj)
+                    -\Libraries;..\User) DEBUG OBJECTEXTEND PRINT(.\nixietube.lst) OBJECT(.\Out_File\nixietube.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   51   2              delay(2);
   52   2              hc595_bit_disable();
   53   2          }
-C51 COMPILER V9.60.0.0   NIXIETUBE                                                         01/08/2021 01:23:25 PAGE 2   
+C51 COMPILER V9.60.0.0   NIXIETUBE                                                         01/08/2021 19:05:39 PAGE 2   
 
   54   1      }
   55          

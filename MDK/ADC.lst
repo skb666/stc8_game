@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   ADC                                                               01/08/2021 01:23:28 PAGE 1   
+C51 COMPILER V9.60.0.0   ADC                                                               01/08/2021 19:05:40 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE ADC
 OBJECT MODULE PLACED IN .\Out_File\ADC.obj
 COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\Device\ADC.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\Device;..\Libra
-                    -ries) DEBUG OBJECTEXTEND PRINT(.\ADC.lst) OBJECT(.\Out_File\ADC.obj)
+                    -ries;..\User) DEBUG OBJECTEXTEND PRINT(.\ADC.lst) OBJECT(.\Out_File\ADC.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   48          //  @brief      ADC转换一次
   49          //  @param      adcn            选择ADC通道
   50          //  @param      resolution      分辨率
-C51 COMPILER V9.60.0.0   ADC                                                               01/08/2021 01:23:28 PAGE 2   
+C51 COMPILER V9.60.0.0   ADC                                                               01/08/2021 19:05:40 PAGE 2   
 
   51          //  @return     void
   52          //  Sample usage:               adc_convert(ADC_P10, ADC_10BIT);
