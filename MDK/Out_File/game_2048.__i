@@ -1,1 +1,0 @@
-"..\User\game_2048.c" LARGE OPTIMIZE (8,SPEED) BROWSE INCDIR(..\Device;..\Libraries;..\User) DEBUG OBJECTEXTEND PRINT(.\game_2048.lst) OBJECT(.\Out_File\game_2048.obj)
