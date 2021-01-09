@@ -12,7 +12,7 @@ enum{
 }gameStatus;
 
 // "2048" 字模(32x32)
-uint8 str_2048[] = {
+code const uint8 str_2048[] = {
     0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
     0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0F,0xF0,0x00,0x00,0x38,0x78,
     0x00,0x00,0x70,0x38,0x00,0x00,0xF0,0x38,0x00,0x00,0xF0,0x78,0x00,0x00,0xF0,0x78,
@@ -225,7 +225,7 @@ uint8 isOver(){
 }
 
 // 设置测试数据
-void setdata(){
+void setTestData(){
     uint8 i, j;
     int t = 50;
     for(i=0; i<4; ++i)
@@ -244,13 +244,11 @@ void setdata(){
 void game2048_init(){
     uint8 i, j;
     tft_lcd_clear(TFT_LCD_LGRAY);
-    setdata();
-    tft_lcd_show_font32(4,str_2048,56,8,TFT_LCD_BROWN,TFT_LCD_WHITE,1);
+    tft_lcd_show_font32(4,str_2048,56,8,TFT_LCD_BRRED,TFT_LCD_WHITE,1);
     tft_lcd_draw_rectangle(19, 91, 221, 293, TFT_LCD_BLACK);
     tft_lcd_fill_rectangle(20, 92, 220, 292, TFT_LCD_LGRAYBLUE);
-    tft_lcd_draw_rectangle(150, 55, 220, 79, TFT_LCD_BRRED);
-    tft_lcd_fill_rectangle(151, 56, 219, 78, TFT_LCD_LIGHTBLUE);
-    tft_lcd_show_string(161,61,"New Game",TFT_LCD_WHITE,TFT_LCD_LIGHTBLUE,12,1);
+    tft_lcd_show_string(20,50,"Best :",TFT_LCD_BLACK,TFT_LCD_LGRAY,16,1);
+    tft_lcd_show_string(20,68,"Score:",TFT_LCD_BLACK,TFT_LCD_LGRAY,16,1);
     for(i=0; i<5; ++i){
         tft_lcd_draw_line(20, 92+50*i, 220, 92+50*i, TFT_LCD_GRAYBLUE);
         tft_lcd_draw_line(20+50*i, 92, 20+50*i, 292, TFT_LCD_GRAYBLUE);
@@ -260,7 +258,7 @@ void game2048_init(){
             tft_lcd_draw_rectangle(23+j*50, 95+i*50, 67+j*50, 139+i*50, TFT_LCD_LIGHTBLUE);
 
     gameStatus = S_NORMAL;
-    setdata();
+    setTestData();
 }
 
 // 处理输入
@@ -306,10 +304,10 @@ void game2048_run(){
     
     if(gameStatus != S_QUIT){
         // 显示历史最高分、当前得分
-        sprintf(buf, "Best :%7d", best);
-        tft_lcd_show_string(20,50,buf,TFT_LCD_BRRED,TFT_LCD_LGRAY,16,0);
-        sprintf(buf, "Score:%7d", score);
-        tft_lcd_show_string(20,68,buf,TFT_LCD_BRRED,TFT_LCD_LGRAY,16,0);
+        sprintf(buf, "%19d", best);
+        tft_lcd_show_string(68,50,buf,TFT_LCD_LBBLUE,TFT_LCD_LGRAY,16,0);
+        sprintf(buf, "%19d", score);
+        tft_lcd_show_string(68,68,buf,TFT_LCD_LBBLUE,TFT_LCD_LGRAY,16,0);
         
         // 显示各格内数据
         for(i=0; i<4; ++i){
@@ -364,6 +362,6 @@ void game2048_run(){
         else if(gameStatus == S_FAIL)
             tft_lcd_show_string(36,300,"          You Lose!         ",TFT_LCD_RED,TFT_LCD_LGRAY,12,0);
         else
-            tft_lcd_show_string(36,300,"Join the tiles, get to 2048!",TFT_LCD_GRAY,TFT_LCD_LGRAY,12,0);
+            tft_lcd_show_string(36,300,"Join the tiles, get to 2048!",TFT_LCD_BROWN,TFT_LCD_LGRAY,12,0);
     }
 }

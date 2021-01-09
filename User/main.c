@@ -3,11 +3,11 @@
 
 uint8 B_100us = 0;
 uint16 tim0_ms = 50;
-uint8 sign_ir = 0;
-int8 sign_key = -1;
 
 void main(void){
     pcf8563_Time localtime;
+    uint8 sign_ir = 0;
+    int8 sign_key = -1;
     
     // 时钟初始化
 	InitMCU();
@@ -34,6 +34,7 @@ void main(void){
             sign_key = KEY_MAP[KeyCode];
             while(IO_KeyState);
         }
+        
         // 红外输入
         if(B_100us){
             B_100us = 0;
@@ -42,6 +43,7 @@ void main(void){
                 sign_ir = ir_rx_ircode();
             }
         }
+        
         // 运行2048
         game2048_run();
         
