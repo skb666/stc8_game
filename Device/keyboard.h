@@ -3,7 +3,7 @@
 
 #include "sys.h"
 
-extern uint8 KeyCode;
+extern int8 KeyCode;
 extern uint8 IO_KeyState;
 extern uint8 KEY_MAP[17];
 
