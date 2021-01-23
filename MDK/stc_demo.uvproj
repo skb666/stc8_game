@@ -382,6 +382,11 @@
               <FilePath>..\User\main.c</FilePath>
             </File>
             <File>
+              <FileName>game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\game.c</FilePath>
+            </File>
+            <File>
               <FileName>game_2048.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\game_2048.c</FilePath>

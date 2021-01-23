@@ -1,5 +1,5 @@
 #include "main.h"
-#include "game_2048.h"
+#include "game.h"
 
 uint8 B_100us = 0;
 uint16 tim0_ms = 50;
@@ -16,23 +16,31 @@ void main(void){
     EA = 1;		        // 中断总开关
     
     // 硬件初始化
-    pcf8563_init();
-    ir_rx_init();
-    tft_lcd_init();
+    pcf8563_init();     // rtc
+    ir_rx_init();       // ir
+    tft_lcd_init();     // lcd
     
     // 用RTC时间初始化随机数种子
     pcf8563_read_rtc(&localtime);
     srand(((long *)&localtime)[0]+((long *)&localtime)[1]);
+    
+    // 从eeprom读取数据
+    readToBuf();
+    
+    // test_code
+//    tft_lcd_clear(TFT_LCD_LGRAY);
+//    while(1){
+//        ;
+//    }
     
     // 游戏初始化
     game2048_init();
     
     while(1){
         // 矩阵键盘输入
-        if(IO_KeyState){
-            // 红外发送
+        if(KeyCode>=0){
             sign_key = KEY_MAP[KeyCode];
-            while(IO_KeyState);
+            KeyCode = -1;
         }
         
         // 红外输入
