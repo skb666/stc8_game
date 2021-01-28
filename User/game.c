@@ -1,7 +1,7 @@
 #include "game.h"
 
 // eeprom缓存
-int32 eeprom_buf[10]={0};
+uint8 *eeprom_buf;
 
 // "2048" 字模(32x32)
 code const uint8 str_2048[] = {
@@ -40,10 +40,12 @@ code const uint8 str_2048[] = {
 };
 
 void readToBuf(){
-    eeprom_read(0, (uint8 *)eeprom_buf, sizeof(eeprom_buf));
+    eeprom_buf = (uint8 *)&gd_2048;
+    eeprom_read(0, eeprom_buf, sizeof(gd_2048));
 }
 
 void updateBuf(){
     eeprom_sector_erase(0);
-    eeprom_write(0, (uint8 *)eeprom_buf, sizeof(eeprom_buf));
+    eeprom_buf = (uint8 *)&gd_2048;
+    eeprom_write(0, eeprom_buf, sizeof(gd_2048));
 }

@@ -5,6 +5,7 @@ uint8 B_100us = 0;
 uint16 tim0_ms = 50;
 
 void main(void){
+    uint8 isFlush = 1;
     pcf8563_Time localtime;
     uint8 sign_ir = 0;
     int8 sign_key = -1;
@@ -34,7 +35,7 @@ void main(void){
 //    }
     
     // 游戏初始化
-    game2048_init();
+    game_2048_init();
     
     while(1){
         // 矩阵键盘输入
@@ -53,52 +54,57 @@ void main(void){
         }
         
         // 运行2048
-        game2048_run();
+        if(isFlush){
+            game_2048_run();
+            isFlush = 0;
+        }
         
         // 字符：0   1   2   3   4   5   6   7   8   9   #   *   w(+) s(/) a(-) d(x) ok
         // IR  ：13  0   1   2   4   5   6   8   9   10  14  12  17   25   20   22   21
         // 按键：0   1   2   3   4   5   6   7   8   9   35  42  43   47   45   120  -
         if(sign_ir){
+            isFlush |= 0x01;
             switch(sign_ir){
                 case 17:
-                    game2048_updateStatus('w');
+                    game_2048_updateStatus('w');
                     break;
                 case 25:
-                    game2048_updateStatus('s');
+                    game_2048_updateStatus('s');
                     break;
                 case 20:
-                    game2048_updateStatus('a');
+                    game_2048_updateStatus('a');
                     break;
                 case 22:
-                    game2048_updateStatus('d');
+                    game_2048_updateStatus('d');
                     break;
                 case 12:
-                    game2048_updateStatus('q');
+                    game_2048_updateStatus('q');
                     break;
                 case 14:
-                    game2048_updateStatus('r');
+                    game_2048_updateStatus('r');
                     break;
             }
             sign_ir = 0;
         }else if(sign_key != -1){
+            isFlush |= 0x01;
             switch(sign_key){
                 case '+':
-                    game2048_updateStatus('w');
+                    game_2048_updateStatus('w');
                     break;
                 case '/':
-                    game2048_updateStatus('s');
+                    game_2048_updateStatus('s');
                     break;
                 case '-':
-                    game2048_updateStatus('a');
+                    game_2048_updateStatus('a');
                     break;
                 case 'x':
-                    game2048_updateStatus('d');
+                    game_2048_updateStatus('d');
                     break;
                 case '*':
-                    game2048_updateStatus('q');
+                    game_2048_updateStatus('q');
                     break;
                 case '#':
-                    game2048_updateStatus('r');
+                    game_2048_updateStatus('r');
                     break;
             }
             sign_key = -1;

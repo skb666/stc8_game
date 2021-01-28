@@ -1,15 +1,8 @@
 #include "game.h"
 
 // 2048游戏数据
-uint16 data2048[4][4];
 uint16 Target = 2048;
-int score=0, best=0;
-enum{
-    S_FAIL = 0,
-    S_WIN,
-    S_NORMAL,
-    S_QUIT
-}gameStatus;
+gameData_2048 gd_2048;
 
 // 随机生成一个2或4
 uint8 generate_randNum(){
@@ -17,11 +10,11 @@ uint8 generate_randNum(){
     uint8 t[16], cnt=0;
     for(i=0; i<4; ++i)
         for(j=0; j<4; ++j)
-            if(data2048[i][j] == 0)
+            if(gd_2048.Data[i][j] == 0)
                 t[cnt++] = i*4+j;
     if(!cnt) return 0;
     value = t[rand()%cnt];
-    data2048[value/4][value%4] = (rand()%10==1) ? 4 : 2;
+    gd_2048.Data[value/4][value%4] = (rand()%10==1) ? 4 : 2;
     return 1;
 }
 
@@ -33,29 +26,30 @@ uint8 moveLeft(){
         currentWritePos = 0;
         lastValue = 0;
         for(j=0; j<4; ++j){
-            tmp[i][j] = data2048[i][j];
-            if(!data2048[i][j]) continue;
+            tmp[i][j] = gd_2048.Data[i][j];
+            if(!gd_2048.Data[i][j]) continue;
             if(lastValue == 0){
-                lastValue = data2048[i][j];
+                lastValue = gd_2048.Data[i][j];
             }else{
-                if(lastValue == data2048[i][j]){
-                    data2048[i][currentWritePos] = lastValue*2;
-                    score += lastValue*2;
+                if(lastValue == gd_2048.Data[i][j]){
+                    gd_2048.Data[i][currentWritePos] = lastValue*2;
+                    gd_2048.Score += lastValue*2;
                     lastValue = 0;
-                    if(data2048[i][currentWritePos] == Target) gameStatus = S_WIN;
+                    if(gd_2048.Data[i][currentWritePos] == Target)
+                        gd_2048.Status = S_WIN;
                 }else{
-                    data2048[i][currentWritePos] = lastValue;
-                    lastValue = data2048[i][j];
+                    gd_2048.Data[i][currentWritePos] = lastValue;
+                    lastValue = gd_2048.Data[i][j];
                 }
                 ++currentWritePos;
             }
-            data2048[i][j] = 0;
-            if(lastValue) data2048[i][currentWritePos] = lastValue;
+            gd_2048.Data[i][j] = 0;
+            if(lastValue) gd_2048.Data[i][currentWritePos] = lastValue;
         }
     }
     for(i=0; i<4; ++i)
         for(j=0; j<4; ++j)
-            if(data2048[i][j] != tmp[i][j]) return 1;
+            if(gd_2048.Data[i][j] != tmp[i][j]) return 1;
     return 0;
 }
 
@@ -67,29 +61,30 @@ uint8 moveRight(){
         currentWritePos = 3;
         lastValue = 0;
         for(j=3; j>=0; --j){
-            tmp[i][j] = data2048[i][j];
-            if(!data2048[i][j]) continue;
+            tmp[i][j] = gd_2048.Data[i][j];
+            if(!gd_2048.Data[i][j]) continue;
             if(lastValue == 0){
-                lastValue = data2048[i][j];
+                lastValue = gd_2048.Data[i][j];
             }else{
-                if(lastValue == data2048[i][j]){
-                    data2048[i][currentWritePos] = lastValue*2;
-                    score += lastValue*2;
+                if(lastValue == gd_2048.Data[i][j]){
+                    gd_2048.Data[i][currentWritePos] = lastValue*2;
+                    gd_2048.Score += lastValue*2;
                     lastValue = 0;
-                    if(data2048[i][currentWritePos] == Target) gameStatus = S_WIN;
+                    if(gd_2048.Data[i][currentWritePos] == Target)
+                        gd_2048.Status = S_WIN;
                 }else{
-                    data2048[i][currentWritePos] = lastValue;
-                    lastValue = data2048[i][j];
+                    gd_2048.Data[i][currentWritePos] = lastValue;
+                    lastValue = gd_2048.Data[i][j];
                 }
                 --currentWritePos;
             }
-            data2048[i][j] = 0;
-            if(lastValue) data2048[i][currentWritePos] = lastValue;
+            gd_2048.Data[i][j] = 0;
+            if(lastValue) gd_2048.Data[i][currentWritePos] = lastValue;
         }
     }
     for(i=0; i<4; ++i)
         for(j=0; j<4; ++j)
-            if(data2048[i][j] != tmp[i][j]) return 1;
+            if(gd_2048.Data[i][j] != tmp[i][j]) return 1;
     return 0;
 }
 
@@ -101,29 +96,30 @@ uint8 moveUp(){
         currentWritePos = 0;
         lastValue = 0;
         for(i=0; i<4; ++i){
-            tmp[i][j] = data2048[i][j];
-            if(!data2048[i][j]) continue;
+            tmp[i][j] = gd_2048.Data[i][j];
+            if(!gd_2048.Data[i][j]) continue;
             if(lastValue == 0){
-                lastValue = data2048[i][j];
+                lastValue = gd_2048.Data[i][j];
             }else{
-                if(lastValue == data2048[i][j]){
-                    data2048[currentWritePos][j] = lastValue*2;
-                    score += lastValue*2;
+                if(lastValue == gd_2048.Data[i][j]){
+                    gd_2048.Data[currentWritePos][j] = lastValue*2;
+                    gd_2048.Score += lastValue*2;
                     lastValue = 0;
-                    if(data2048[currentWritePos][j] == Target) gameStatus = S_WIN;
+                    if(gd_2048.Data[currentWritePos][j] == Target)
+                        gd_2048.Status = S_WIN;
                 }else{
-                    data2048[currentWritePos][j] = lastValue;
-                    lastValue = data2048[i][j];
+                    gd_2048.Data[currentWritePos][j] = lastValue;
+                    lastValue = gd_2048.Data[i][j];
                 }
                 ++currentWritePos;
             }
-            data2048[i][j] = 0;
-            if(lastValue) data2048[currentWritePos][j] = lastValue;
+            gd_2048.Data[i][j] = 0;
+            if(lastValue) gd_2048.Data[currentWritePos][j] = lastValue;
         }
     }
     for(i=0; i<4; ++i)
         for(j=0; j<4; ++j)
-            if(data2048[i][j] != tmp[i][j]) return 1;
+            if(gd_2048.Data[i][j] != tmp[i][j]) return 1;
     return 0;
 }
 
@@ -135,29 +131,30 @@ uint8 moveDown(){
         currentWritePos = 3;
         lastValue = 0;
         for(i=3; i>=0; --i){
-            tmp[i][j] = data2048[i][j];
-            if(!data2048[i][j]) continue;
+            tmp[i][j] = gd_2048.Data[i][j];
+            if(!gd_2048.Data[i][j]) continue;
             if(lastValue == 0){
-                lastValue = data2048[i][j];
+                lastValue = gd_2048.Data[i][j];
             }else{
-                if(lastValue == data2048[i][j]){
-                    data2048[currentWritePos][j] = lastValue*2;
-                    score += lastValue*2;
+                if(lastValue == gd_2048.Data[i][j]){
+                    gd_2048.Data[currentWritePos][j] = lastValue*2;
+                    gd_2048.Score += lastValue*2;
                     lastValue = 0;
-                    if(data2048[currentWritePos][j] == Target) gameStatus = S_WIN;
+                    if(gd_2048.Data[currentWritePos][j] == Target)
+                        gd_2048.Status = S_WIN;
                 }else{
-                    data2048[currentWritePos][j] = lastValue;
-                    lastValue = data2048[i][j];
+                    gd_2048.Data[currentWritePos][j] = lastValue;
+                    lastValue = gd_2048.Data[i][j];
                 }
                 --currentWritePos;
             }
-            data2048[i][j] = 0;
-            if(lastValue) data2048[currentWritePos][j] = lastValue;
+            gd_2048.Data[i][j] = 0;
+            if(lastValue) gd_2048.Data[currentWritePos][j] = lastValue;
         }
     }
     for(i=0; i<4; ++i)
         for(j=0; j<4; ++j)
-            if(data2048[i][j] != tmp[i][j]) return 1;
+            if(gd_2048.Data[i][j] != tmp[i][j]) return 1;
     return 0;
 }
 
@@ -166,11 +163,11 @@ void restart(){
     uint8 i, j;
     for(i=0; i<4; ++i)
         for(j=0; j<4; ++j)
-            data2048[i][j] = 0;
+            gd_2048.Data[i][j] = 0;
     generate_randNum();
     generate_randNum();
-    score = 0;
-    gameStatus = S_NORMAL;
+    gd_2048.Score = 0;
+    gd_2048.Status = S_NORMAL;
 }
 
 // 判断游戏结束
@@ -178,10 +175,10 @@ uint8 isOver(){
     uint8 i, j;
     for(i=0; i<4; ++i){
         for(j=0; j<4; ++j){
-            if(!data2048[i][j]) return 0;
-            if ((j+1 < 4) && (data2048[i][j] == data2048[i][j+1]))
+            if(!gd_2048.Data[i][j]) return 0;
+            if ((j+1 < 4) && (gd_2048.Data[i][j] == gd_2048.Data[i][j+1]))
                 return 0;
-            if ((i+1 < 4) && (data2048[i][j] == data2048[i+1][j]))
+            if ((i+1 < 4) && (gd_2048.Data[i][j] == gd_2048.Data[i+1][j]))
                 return 0;
         }
     }
@@ -192,20 +189,20 @@ uint8 isOver(){
 void setTestData(){
     uint8 i, j;
     int t = 50;
-    for(i=0; i<4; ++i)
-        for(j=0; j<4; ++j)
-            data2048[i][j] = 16 << i << j;
-    score = 0;
-    best = eeprom_buf[0];
-    if(best<0){
-        best = 0;
-        eeprom_buf[0] = best;
+    if(gd_2048.Status != S_NORMAL){
+        for(i=0; i<4; ++i)
+            for(j=0; j<4; ++j)
+                gd_2048.Data[i][j] = 16 << i << j;
+        gd_2048.Score = 0;
+        gd_2048.Status = S_NORMAL;
+        if(gd_2048.Best<0)
+            gd_2048.Best = 0;
         updateBuf();
     }
 }
 
 // 2048初始化游戏界面
-void game2048_init(){
+void game_2048_init(){
     uint8 i, j;
     tft_lcd_clear(TFT_LCD_LGRAY);
     tft_lcd_show_font32(4,str_2048,56,8,TFT_LCD_BRRED,TFT_LCD_WHITE,1);
@@ -221,63 +218,61 @@ void game2048_init(){
         for(j=0; j<4; ++j)
             tft_lcd_draw_rectangle(23+j*50, 95+i*50, 67+j*50, 139+i*50, TFT_LCD_LIGHTBLUE);
 
-    gameStatus = S_NORMAL;
     setTestData();
 }
 
 // 处理输入
-void game2048_updateStatus(uint8 key){
+void game_2048_updateStatus(uint8 key){
     uint8 updated = 0;
 
     switch(key){
         case 'q':
-            gameStatus = S_QUIT;
+            gd_2048.Status = S_QUIT;
             break;
         case 'r':
             restart();
             break;
         case 'a':
-            if(gameStatus == S_NORMAL) updated = moveLeft();
+            if(gd_2048.Status == S_NORMAL) updated = moveLeft();
             break;
         case 'd':
-            if(gameStatus == S_NORMAL) updated = moveRight();
+            if(gd_2048.Status == S_NORMAL) updated = moveRight();
             break;
         case 'w':
-            if(gameStatus == S_NORMAL) updated = moveUp();
+            if(gd_2048.Status == S_NORMAL) updated = moveUp();
             break;
         case 's':
-            if(gameStatus == S_NORMAL) updated = moveDown();
+            if(gd_2048.Status == S_NORMAL) updated = moveDown();
             break;
     }
     
     if(updated){
         generate_randNum();
-        if(isOver()) gameStatus = S_FAIL;
-        if(score>best){
-            best = score;
-            eeprom_buf[0] = best;
+        if(isOver()) gd_2048.Status = S_FAIL;
+        if(gd_2048.Score>gd_2048.Best){
+            gd_2048.Best = gd_2048.Score;
             updateBuf();
         }
     }
 }
 
 // 运行游戏
-void game2048_run(){
+void game_2048_run(){
     uint8 buf[50], slen;
     uint8 i, j;
     
-    if(gameStatus != S_QUIT){
+    if(gd_2048.Status != S_QUIT){
         // 显示历史最高分、当前得分
-        sprintf(buf, "%19d", best);
+        sprintf(buf, "%19d", gd_2048.Best);
         tft_lcd_show_string(68,50,buf,TFT_LCD_LBBLUE,TFT_LCD_LGRAY,16,0);
-        sprintf(buf, "%19d", score);
+        sprintf(buf, "%19d", gd_2048.Score);
         tft_lcd_show_string(68,68,buf,TFT_LCD_LBBLUE,TFT_LCD_LGRAY,16,0);
         
         // 显示各格内数据
         for(i=0; i<4; ++i){
             for(j=0; j<4; ++j){
-                if(data2048[i][j]){
-                    switch(data2048[i][j]){
+                if(gd_2048.Data[i][j]){
+                    switch(gd_2048.Data[i][j]){
                         case 2:
                             tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_LIGHTGREEN);
                             break;
@@ -312,7 +307,7 @@ void game2048_run(){
                             tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BLACK);
                             break;
                     }
-                    sprintf(buf, "%d", (int)data2048[i][j]);
+                    sprintf(buf, "%d", (int)gd_2048.Data[i][j]);
                     slen = strlen(buf);
                     tft_lcd_show_string(45+50*j-4*slen,109+50*i,buf,TFT_LCD_WHITE,TFT_LCD_LGRAYBLUE,16,1);
                 }else{
@@ -321,9 +316,9 @@ void game2048_run(){
             }
         }
 
-        if(gameStatus == S_WIN)
+        if(gd_2048.Status == S_WIN)
             tft_lcd_show_string(36,300,"          You Win !         ",TFT_LCD_RED,TFT_LCD_LGRAY,12,0);
-        else if(gameStatus == S_FAIL)
+        else if(gd_2048.Status == S_FAIL)
             tft_lcd_show_string(36,300,"          You Lose!         ",TFT_LCD_RED,TFT_LCD_LGRAY,12,0);
         else
             tft_lcd_show_string(36,300,"Join the tiles, get to 2048!",TFT_LCD_BROWN,TFT_LCD_LGRAY,12,0);
