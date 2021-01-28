@@ -195,9 +195,10 @@ void setTestData(){
                 gd_2048.Data[i][j] = 16 << i << j;
         gd_2048.Score = 0;
         gd_2048.Status = S_NORMAL;
-        if(gd_2048.Best<0)
+        if(gd_2048.Best<0){
             gd_2048.Best = 0;
-        updateBuf();
+            updateBuf();
+        }
     }
 }
 
@@ -249,10 +250,9 @@ void game_2048_updateStatus(uint8 key){
     if(updated){
         generate_randNum();
         if(isOver()) gd_2048.Status = S_FAIL;
-        if(gd_2048.Score>gd_2048.Best){
+        if(gd_2048.Score>gd_2048.Best)
             gd_2048.Best = gd_2048.Score;
-            updateBuf();
-        }
+        updateBuf();
     }
 }
 
