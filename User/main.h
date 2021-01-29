@@ -20,5 +20,6 @@
 #include "touch.h"
 #include "ir.h"
 #include "pcf8563.h"
+#include "qma7981.h"
 
 #endif
