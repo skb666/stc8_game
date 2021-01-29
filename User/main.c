@@ -83,6 +83,9 @@ void main(void){
                 case 14:
                     game_2048_updateStatus('r');
                     break;
+                case 21:
+                    game_2048_updateStatus('c');
+                    break;
             }
             sign_ir = 0;
         }else if(sign_key != -1){

@@ -1,7 +1,6 @@
 #include "game.h"
 
 // 2048游戏数据
-uint16 Target = 2048;
 gameData_2048 gd_2048;
 
 // 随机生成一个2或4
@@ -35,7 +34,7 @@ uint8 moveLeft(){
                     gd_2048.Data[i][currentWritePos] = lastValue*2;
                     gd_2048.Score += lastValue*2;
                     lastValue = 0;
-                    if(gd_2048.Data[i][currentWritePos] == Target)
+                    if(gd_2048.Data[i][currentWritePos] == gd_2048.Target)
                         gd_2048.Status = S_WIN;
                 }else{
                     gd_2048.Data[i][currentWritePos] = lastValue;
@@ -70,7 +69,7 @@ uint8 moveRight(){
                     gd_2048.Data[i][currentWritePos] = lastValue*2;
                     gd_2048.Score += lastValue*2;
                     lastValue = 0;
-                    if(gd_2048.Data[i][currentWritePos] == Target)
+                    if(gd_2048.Data[i][currentWritePos] == gd_2048.Target)
                         gd_2048.Status = S_WIN;
                 }else{
                     gd_2048.Data[i][currentWritePos] = lastValue;
@@ -105,7 +104,7 @@ uint8 moveUp(){
                     gd_2048.Data[currentWritePos][j] = lastValue*2;
                     gd_2048.Score += lastValue*2;
                     lastValue = 0;
-                    if(gd_2048.Data[currentWritePos][j] == Target)
+                    if(gd_2048.Data[currentWritePos][j] == gd_2048.Target)
                         gd_2048.Status = S_WIN;
                 }else{
                     gd_2048.Data[currentWritePos][j] = lastValue;
@@ -140,7 +139,7 @@ uint8 moveDown(){
                     gd_2048.Data[currentWritePos][j] = lastValue*2;
                     gd_2048.Score += lastValue*2;
                     lastValue = 0;
-                    if(gd_2048.Data[currentWritePos][j] == Target)
+                    if(gd_2048.Data[currentWritePos][j] == gd_2048.Target)
                         gd_2048.Status = S_WIN;
                 }else{
                     gd_2048.Data[currentWritePos][j] = lastValue;
@@ -160,13 +159,11 @@ uint8 moveDown(){
 
 // 重新开始游戏
 void restart(){
-    uint8 i, j;
-    for(i=0; i<4; ++i)
-        for(j=0; j<4; ++j)
-            gd_2048.Data[i][j] = 0;
+    memset(gd_2048.Data, 0, sizeof(gd_2048.Data));
     generate_randNum();
     generate_randNum();
     gd_2048.Score = 0;
+    gd_2048.Target = 2048;
     gd_2048.Status = S_NORMAL;
 }
 
@@ -188,7 +185,7 @@ uint8 isOver(){
 // 设置测试数据
 void setTestData(){
     uint8 i, j;
-    int t = 50;
+    uint8 t = 0;
     if(gd_2048.Status != S_NORMAL){
         for(i=0; i<4; ++i)
             for(j=0; j<4; ++j)
@@ -197,8 +194,13 @@ void setTestData(){
         gd_2048.Status = S_NORMAL;
         if(gd_2048.Best<0){
             gd_2048.Best = 0;
-            updateBuf();
+            t = 1;
         }
+        if(gd_2048.Target%2048 != 0 || !gd_2048.Target){
+            gd_2048.Target = 2048;
+            t = 1;
+        }
+        if(t) updateBuf();
     }
 }
 
@@ -232,6 +234,12 @@ void game_2048_updateStatus(uint8 key){
             break;
         case 'r':
             restart();
+            break;
+        case 'c':
+            if(gd_2048.Status == S_WIN){
+                gd_2048.Status = S_NORMAL;
+                gd_2048.Target *= 2;
+            }
             break;
         case 'a':
             if(gd_2048.Status == S_NORMAL) updated = moveLeft();
@@ -304,6 +312,9 @@ void game_2048_run(){
                             tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_GRAY);
                             break;
                         case 2048:
+                            tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BLACK);
+                            break;
+                        case 4096:
                             tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BLACK);
                             break;
                     }

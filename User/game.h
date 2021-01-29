@@ -4,6 +4,7 @@
 #include "sys.h"
 #include "tftlcd.h"
 #include <stdlib.h>
+#include <string.h>
 #include "eeprom.h"
 
 typedef enum{
@@ -16,6 +17,7 @@ typedef enum{
 typedef struct{
     uint16 Data[4][4];
     int Score, Best;
+    uint16 Target;
     gameStatus Status;
 }gameData_2048;
 
