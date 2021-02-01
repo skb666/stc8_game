@@ -5,7 +5,7 @@ static uint8 xdata membuff[4000];
 // eeprom缓存
 uint8 *eeprom_buf;
 
-void game_init(){
+void mempool_init(){
     // 初始化内存池
     init_mempool(membuff, sizeof(membuff));
 }
@@ -36,7 +36,7 @@ void updateFromBuf(){
     
     eeprom_buf = (uint8 *)&gd_snake.Best;
     eeprom_write(current_s, eeprom_buf, sizeof(gd_snake.Best));
-    current_s += sizeof(gd_2048);
+    current_s += sizeof(gd_snake.Best);
     
     eeprom_buf = (uint8 *)&gd_snake.Speed;
     eeprom_write(current_s, eeprom_buf, sizeof(gd_snake.Speed));

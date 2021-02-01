@@ -34,7 +34,7 @@ typedef struct{
 
 typedef struct Node{
     Axis axis;
-    struct Node *next;
+    struct Node *pre, *next;
 }Node, *Snake;
 
 typedef struct{
@@ -52,22 +52,23 @@ typedef struct{
     uint16 length;
     Axis food;
     Snake snake;
+    Node *snake_tail;
 }gameData_snake;
 
 extern gameData_2048 gd_2048;
 extern gameData_snake gd_snake;
 
-void game_init();
+void mempool_init();
 void readToBuf();
 void updateFromBuf();
 
 extern code const uint8 str_2048[];
-void game_2048_init();                      // 2048初始化游戏界面
-void game_2048_run();                       // 运行游戏
+void game_2048_init();                      // 初始化游戏界面
 void game_2048_updateStatus(uint8 key);     // 处理输入
 
 extern code const uint8 str_snake[];
-void game_snake_init();                     // 贪吃蛇初始化游戏界面
+void game_snake_init();                     // 初始化游戏界面
 void game_snake_run();                      // 运行游戏
+void game_snake_updateStatus(uint8 key);    // 处理输入
 
 #endif
