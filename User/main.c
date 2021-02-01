@@ -2,10 +2,12 @@
 #include "game.h"
 
 uint8 B_100us = 0;
+uint8 B_1ms = 0;
 uint16 tim0_ms = 50;
 
+uint8 isFlush = 1;
+
 void main(void){
-    uint8 isFlush = 1;
     pcf8563_Time localtime;
     uint8 sign_ir = 0;
     int8 sign_key = -1;
@@ -25,14 +27,16 @@ void main(void){
     pcf8563_read_rtc(&localtime);
     srand(((long *)&localtime)[0]+((long *)&localtime)[1]);
     
-    // 从eeprom读取数据
+    // 游戏运行前预处理
+    game_init();
     readToBuf();
     
     // test_code
-//    tft_lcd_clear(TFT_LCD_LGRAY);
-//    while(1){
-//        ;
-//    }
+    game_snake_init();
+    game_snake_run();
+    while(1){
+        ;
+    }
     
     // 游戏初始化
     game_2048_init();
@@ -53,7 +57,7 @@ void main(void){
             }
         }
         
-        // 运行2048
+        // 刷新lcd画面
         if(isFlush){
             game_2048_run();
             isFlush = 0;
@@ -122,6 +126,7 @@ void Timer0_interrupt(void) interrupt 1{
     if(cnt == tim0_ms - 1){
         IO_KeyScan();
     }
+    B_1ms = 1;
 }
 
 // 0.1ms

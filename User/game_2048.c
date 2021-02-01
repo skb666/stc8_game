@@ -182,8 +182,8 @@ uint8 isOver(){
     return 1;
 }
 
-// 设置测试数据
-void setTestData(){
+// 设置数据
+void setData_2048(){
     uint8 i, j;
     uint8 t = 0;
     if(gd_2048.Status != S_NORMAL){
@@ -200,7 +200,7 @@ void setTestData(){
             gd_2048.Target = 2048;
             t = 1;
         }
-        if(t) updateBuf();
+        if(t) updateFromBuf();
     }
 }
 
@@ -220,8 +220,8 @@ void game_2048_init(){
     for(i=0; i<4; ++i)
         for(j=0; j<4; ++j)
             tft_lcd_draw_rectangle(23+j*50, 95+i*50, 67+j*50, 139+i*50, TFT_LCD_LIGHTBLUE);
-
-    setTestData();
+   // 设置数据
+    setData_2048();
 }
 
 // 处理输入
@@ -231,6 +231,7 @@ void game_2048_updateStatus(uint8 key){
     switch(key){
         case 'q':
             gd_2048.Status = S_QUIT;
+            updateFromBuf();
             break;
         case 'r':
             restart();
@@ -239,6 +240,8 @@ void game_2048_updateStatus(uint8 key){
             if(gd_2048.Status == S_WIN){
                 gd_2048.Status = S_NORMAL;
                 gd_2048.Target *= 2;
+            }else if(gd_2048.Status == S_FAIL){
+                restart();
             }
             break;
         case 'a':
@@ -260,13 +263,13 @@ void game_2048_updateStatus(uint8 key){
         if(isOver()) gd_2048.Status = S_FAIL;
         if(gd_2048.Score>gd_2048.Best)
             gd_2048.Best = gd_2048.Score;
-        updateBuf();
+        updateFromBuf();
     }
 }
 
 // 运行游戏
 void game_2048_run(){
-    uint8 buf[50], slen;
+    uint8 buf[25], slen;
     uint8 i, j;
     
     if(gd_2048.Status != S_QUIT){
@@ -327,11 +330,16 @@ void game_2048_run(){
             }
         }
 
-        if(gd_2048.Status == S_WIN)
-            tft_lcd_show_string(36,300,"          You Win !         ",TFT_LCD_RED,TFT_LCD_LGRAY,12,0);
-        else if(gd_2048.Status == S_FAIL)
-            tft_lcd_show_string(36,300,"          You Lose!         ",TFT_LCD_RED,TFT_LCD_LGRAY,12,0);
-        else
-            tft_lcd_show_string(36,300,"Join the tiles, get to 2048!",TFT_LCD_BROWN,TFT_LCD_LGRAY,12,0);
+        switch(gd_2048.Status){
+            case S_WIN:
+                tft_lcd_show_string(36,300,"          You Win !         ",TFT_LCD_RED,TFT_LCD_LGRAY,12,0);
+                break;
+            case S_FAIL:
+                tft_lcd_show_string(36,300,"         Game Over !        ",TFT_LCD_RED,TFT_LCD_LGRAY,12,0);
+                break;
+            default:
+                tft_lcd_show_string(36,300,"Join the tiles, get to 2048!",TFT_LCD_BROWN,TFT_LCD_LGRAY,12,0);
+                break;
+        }
     }
 }
