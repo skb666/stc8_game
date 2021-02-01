@@ -158,7 +158,7 @@ uint8 moveDown(){
 }
 
 // 重新开始游戏
-void restart(){
+void restart_2048(){
     memset(gd_2048.Data, 0, sizeof(gd_2048.Data));
     generate_randNum();
     generate_randNum();
@@ -168,7 +168,7 @@ void restart(){
 }
 
 // 判断游戏结束
-uint8 isOver(){
+uint8 isOver_2048(){
     uint8 i, j;
     for(i=0; i<4; ++i){
         for(j=0; j<4; ++j){
@@ -191,7 +191,7 @@ void setData_2048(){
             for(j=0; j<4; ++j)
                 gd_2048.Data[i][j] = 16 << i << j;
         gd_2048.Score = 0;
-        gd_2048.Status = S_NORMAL;
+        gd_2048.Status = S_PAUSE;
         if(gd_2048.Best<0){
             gd_2048.Best = 0;
             t = 1;
@@ -201,6 +201,84 @@ void setData_2048(){
             t = 1;
         }
         if(t) updateFromBuf();
+    }
+}
+
+void draw_2048_score(){
+    uint8 buf[25];
+    // 显示历史最高分、当前得分
+    sprintf(buf, "%19d", gd_2048.Best);
+    tft_lcd_show_string(68,50,buf,TFT_LCD_LBBLUE,TFT_LCD_LGRAY,16,0);
+    sprintf(buf, "%19d", gd_2048.Score);
+    tft_lcd_show_string(68,68,buf,TFT_LCD_LBBLUE,TFT_LCD_LGRAY,16,0);
+}
+
+void draw_2048_status(){
+    switch(gd_2048.Status){
+        case S_WIN:
+            tft_lcd_show_string(36,300,"          You Win !         ",TFT_LCD_RED,TFT_LCD_LGRAY,12,0);
+            break;
+        case S_FAIL:
+            tft_lcd_show_string(36,300,"         Game Over !        ",TFT_LCD_RED,TFT_LCD_LGRAY,12,0);
+            break;
+        default:
+            tft_lcd_show_string(36,300,"Join the tiles, get to 2048!",TFT_LCD_BROWN,TFT_LCD_LGRAY,12,0);
+            break;
+    }
+}
+
+void draw_2048_data(){
+    uint8 buf[25], slen;
+    uint8 i, j;
+    // 显示各格内数据
+    for(i=0; i<4; ++i){
+        for(j=0; j<4; ++j){
+            if(gd_2048.Data[i][j]){
+                switch(gd_2048.Data[i][j]){
+                    case 2:
+                        tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_LIGHTGREEN);
+                        break;
+                    case 4:
+                        tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BRRED);
+                        break;
+                    case 8:
+                        tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_GREEN);
+                        break;
+                    case 16:
+                        tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_DARKBLUE);
+                        break;
+                    case 32:
+                        tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BLUE);
+                        break;
+                    case 64:
+                        tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_RED);
+                        break;
+                    case 128:
+                        tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BRED);
+                        break;
+                    case 256:
+                        tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BROWN);
+                        break;
+                    case 512:
+                        tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_LBBLUE);
+                        break;
+                    case 1024:
+                        tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_GRAY);
+                        break;
+                    case 2048:
+                        tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BLACK);
+                        break;
+                    case 4096:
+                        tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BLACK);
+                        break;
+                }
+                sprintf(buf, "%d", (int)gd_2048.Data[i][j]);
+                slen = strlen(buf);
+                tft_lcd_show_string(45+50*j-4*slen,109+50*i,buf,TFT_LCD_WHITE,TFT_LCD_LGRAYBLUE,16,1);
+            }else{
+                tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_LGRAYBLUE);
+            }
+        }
     }
 }
 
@@ -220,8 +298,11 @@ void game_2048_init(){
     for(i=0; i<4; ++i)
         for(j=0; j<4; ++j)
             tft_lcd_draw_rectangle(23+j*50, 95+i*50, 67+j*50, 139+i*50, TFT_LCD_LIGHTBLUE);
-   // 设置数据
+    // 设置数据
     setData_2048();
+    draw_2048_score();
+    draw_2048_data();
+    draw_2048_status();
 }
 
 // 处理输入
@@ -230,19 +311,26 @@ void game_2048_updateStatus(uint8 key){
 
     switch(key){
         case 'q':
+            // TODO
             gd_2048.Status = S_QUIT;
-            updateFromBuf();
             break;
         case 'r':
-            restart();
+            restart_2048();
+            draw_2048_score();
+            draw_2048_data();
+            draw_2048_status();
             break;
         case 'c':
             if(gd_2048.Status == S_WIN){
                 gd_2048.Status = S_NORMAL;
                 gd_2048.Target *= 2;
-            }else if(gd_2048.Status == S_FAIL){
-                restart();
+                updateFromBuf();
+            }else if((gd_2048.Status == S_FAIL) || (gd_2048.Status == S_PAUSE)){
+                restart_2048();
+                draw_2048_score();
+                draw_2048_data();
             }
+            draw_2048_status();
             break;
         case 'a':
             if(gd_2048.Status == S_NORMAL) updated = moveLeft();
@@ -260,86 +348,12 @@ void game_2048_updateStatus(uint8 key){
     
     if(updated){
         generate_randNum();
-        if(isOver()) gd_2048.Status = S_FAIL;
+        if(isOver_2048()) gd_2048.Status = S_FAIL;
         if(gd_2048.Score>gd_2048.Best)
             gd_2048.Best = gd_2048.Score;
         updateFromBuf();
-    }
-}
-
-// 运行游戏
-void game_2048_run(){
-    uint8 buf[25], slen;
-    uint8 i, j;
-    
-    if(gd_2048.Status != S_QUIT){
-        // 显示历史最高分、当前得分
-        sprintf(buf, "%19d", gd_2048.Best);
-        tft_lcd_show_string(68,50,buf,TFT_LCD_LBBLUE,TFT_LCD_LGRAY,16,0);
-        sprintf(buf, "%19d", gd_2048.Score);
-        tft_lcd_show_string(68,68,buf,TFT_LCD_LBBLUE,TFT_LCD_LGRAY,16,0);
-        
-        // 显示各格内数据
-        for(i=0; i<4; ++i){
-            for(j=0; j<4; ++j){
-                if(gd_2048.Data[i][j]){
-                    switch(gd_2048.Data[i][j]){
-                        case 2:
-                            tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_LIGHTGREEN);
-                            break;
-                        case 4:
-                            tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BRRED);
-                            break;
-                        case 8:
-                            tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_GREEN);
-                            break;
-                        case 16:
-                            tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_DARKBLUE);
-                            break;
-                        case 32:
-                            tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BLUE);
-                            break;
-                        case 64:
-                            tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_RED);
-                            break;
-                        case 128:
-                            tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BRED);
-                            break;
-                        case 256:
-                            tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BROWN);
-                            break;
-                        case 512:
-                            tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_LBBLUE);
-                            break;
-                        case 1024:
-                            tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_GRAY);
-                            break;
-                        case 2048:
-                            tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BLACK);
-                            break;
-                        case 4096:
-                            tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_BLACK);
-                            break;
-                    }
-                    sprintf(buf, "%d", (int)gd_2048.Data[i][j]);
-                    slen = strlen(buf);
-                    tft_lcd_show_string(45+50*j-4*slen,109+50*i,buf,TFT_LCD_WHITE,TFT_LCD_LGRAYBLUE,16,1);
-                }else{
-                    tft_lcd_fill_rectangle(24+j*50, 96+i*50, 66+j*50, 138+i*50, TFT_LCD_LGRAYBLUE);
-                }
-            }
-        }
-
-        switch(gd_2048.Status){
-            case S_WIN:
-                tft_lcd_show_string(36,300,"          You Win !         ",TFT_LCD_RED,TFT_LCD_LGRAY,12,0);
-                break;
-            case S_FAIL:
-                tft_lcd_show_string(36,300,"         Game Over !        ",TFT_LCD_RED,TFT_LCD_LGRAY,12,0);
-                break;
-            default:
-                tft_lcd_show_string(36,300,"Join the tiles, get to 2048!",TFT_LCD_BROWN,TFT_LCD_LGRAY,12,0);
-                break;
-        }
+        draw_2048_score();
+        draw_2048_data();
+        draw_2048_status();
     }
 }
