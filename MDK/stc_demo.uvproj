@@ -391,6 +391,11 @@
               <FileType>1</FileType>
               <FilePath>..\User\game_2048.c</FilePath>
             </File>
+            <File>
+              <FileName>game_snake.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\game_snake.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
