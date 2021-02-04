@@ -14,6 +14,8 @@ void InitMCU(){
     P6M1 = 0;   P6M0 = 0;   //设置为准双向口
     P7M1 = 0;   P7M0 = 0;   //设置为准双向口
 
+    RSTCFG = 0x50;          //复位寄存器，如果是0x00，则复位管脚用作普通IO
+    
 	led8_disable();			//LED Power OFF
     hc595_init(); 
    	hc595_disable();
