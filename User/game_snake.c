@@ -69,24 +69,6 @@ uint8 isOver_snake(){
     return 0;
 }
 
-// 设置数据
-void setData_snake(){
-    uint8 t = 0;
-    gd_snake.Score = 0;
-    gd_snake.Status = S_PAUSE;
-    generate_snake();
-    generate_food();
-    if(gd_snake.Best<0){
-        gd_snake.Best = 0;
-        t = 1;
-    }
-    if(gd_snake.Speed < 0 || gd_snake.Speed > 3){
-        gd_snake.Speed = SPEED_MEDIUM;
-        t = 1;
-    }
-    if(t) updateFromBuf();
-}
-
 void draw_snake_speed(){
     // 显示速度
     switch(gd_snake.Speed){
@@ -158,7 +140,7 @@ void draw_snake_main(){
 
 void snakeMove(){
     Node *ptr;
-    if(gd_snake.Status == S_NORMAL){
+    if((game_mode == G_SNAKE) && (gd_snake.Status == S_NORMAL)){
         // 创建新蛇头
         ptr = (Snake)malloc(sizeof(Node));
         ptr->pre = NULL;
@@ -237,6 +219,24 @@ void destroye_food(){
     draw_snake_axis(&gd_snake.food, TFT_LCD_LGRAYBLUE);
 }
 
+// 设置数据
+void setData_snake(){
+    uint8 t = 0;
+    gd_snake.Score = 0;
+    gd_snake.Status = S_PAUSE;
+    generate_snake();
+    generate_food();
+    if(gd_snake.Best<0){
+        gd_snake.Best = 0;
+        t = 1;
+    }
+    if(gd_snake.Speed < 0 || gd_snake.Speed > 3){
+        gd_snake.Speed = SPEED_MEDIUM;
+        t = 1;
+    }
+    if(t) updateFromBuf();
+}
+
 void restart_snake(){
     gd_snake.Score = 0;
     destroye_snake();
@@ -277,7 +277,10 @@ void game_snake_init(){
 void game_snake_updateStatus(uint8 key){
     switch(key){
         case 'q':
-            // TODO
+            destroye_snake();
+            clear_key_buf();
+            game_mode = G_2048;
+            game_2048_init();
             break;
         case 'r':
             restart_snake();
@@ -332,7 +335,7 @@ void game_snake_updateStatus(uint8 key){
 }
 
 void gSnake_check_key(){
-    if(buf_l != buf_r){
+    if(buf_l < buf_r){
         if(key_buf[buf_l].type == K_IR){
             switch(key_buf[buf_l].value){
                 case 17:
@@ -349,7 +352,7 @@ void gSnake_check_key(){
                     break;
                 case 12:
                     game_snake_updateStatus('q');
-                    break;
+                    return;
                 case 14:
                     game_snake_updateStatus('r');
                     break;
@@ -382,7 +385,7 @@ void gSnake_check_key(){
                     break;
                 case '*':
                     game_snake_updateStatus('q');
-                    break;
+                    return;
                 case '#':
                     game_snake_updateStatus('r');
                     break;

@@ -311,8 +311,9 @@ void game_2048_updateStatus(uint8 key){
 
     switch(key){
         case 'q':
-            // TODO
-            gd_2048.Status = S_QUIT;
+            clear_key_buf();
+            game_mode = G_SNAKE;
+            game_snake_init();
             break;
         case 'r':
             restart_2048();
@@ -360,7 +361,7 @@ void game_2048_updateStatus(uint8 key){
 
 // ‘À––”Œœ∑
 void game_2048_run(){
-    if(buf_l != buf_r){
+    if(buf_l < buf_r){
         if(key_buf[buf_l].type == K_IR){
             switch(key_buf[buf_l].value){
                 case 17:
@@ -377,7 +378,7 @@ void game_2048_run(){
                     break;
                 case 12:
                     game_2048_updateStatus('q');
-                    break;
+                    return;
                 case 14:
                     game_2048_updateStatus('r');
                     break;
@@ -401,7 +402,7 @@ void game_2048_run(){
                     break;
                 case '*':
                     game_2048_updateStatus('q');
-                    break;
+                    return;
                 case '#':
                     game_2048_updateStatus('r');
                     break;
