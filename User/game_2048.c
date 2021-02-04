@@ -313,6 +313,7 @@ void game_2048_updateStatus(uint8 key){
         case 'q':
             clear_key_buf();
             game_mode = G_SNAKE;
+            updateFromBuf();
             game_snake_init();
             break;
         case 'r':

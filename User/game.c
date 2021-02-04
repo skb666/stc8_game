@@ -53,6 +53,10 @@ void readToBuf(){
     eeprom_buf = (uint8 *)&gd_snake.Speed;
     eeprom_read(current_s, eeprom_buf, sizeof(gd_snake.Speed));
     current_s += sizeof(gd_snake.Speed);
+    
+    eeprom_buf = (uint8 *)&game_mode;
+    eeprom_read(current_s, eeprom_buf, sizeof(game_mode));
+    current_s += sizeof(game_mode);
 }
 
 void updateFromBuf(){
@@ -70,6 +74,10 @@ void updateFromBuf(){
     eeprom_buf = (uint8 *)&gd_snake.Speed;
     eeprom_write(current_s, eeprom_buf, sizeof(gd_snake.Speed));
     current_s += sizeof(gd_snake.Speed);
+    
+    eeprom_buf = (uint8 *)&game_mode;
+    eeprom_write(current_s, eeprom_buf, sizeof(game_mode));
+    current_s += sizeof(game_mode);
 }
 
 void check_key(){

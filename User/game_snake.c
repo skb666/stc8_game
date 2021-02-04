@@ -280,6 +280,7 @@ void game_snake_updateStatus(uint8 key){
             destroye_snake();
             clear_key_buf();
             game_mode = G_2048;
+            updateFromBuf();
             game_2048_init();
             break;
         case 'r':

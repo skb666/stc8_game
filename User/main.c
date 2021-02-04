@@ -24,7 +24,10 @@ void main(void){
     readToBuf();
     
     // 游戏模式选择
-    game_mode = G_2048;
+    if((game_mode != G_2048) && (game_mode != G_SNAKE)){
+        game_mode = G_2048;
+        updateFromBuf();
+    }
     
     // 游戏初始化
     switch(game_mode){
