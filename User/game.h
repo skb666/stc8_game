@@ -6,6 +6,24 @@
 #include <stdlib.h>
 #include <string.h>
 #include "eeprom.h"
+#include "keyboard.h"
+#include "ir.h"
+
+typedef enum{
+    K_IR,
+    K_KBD
+}keyType;
+
+typedef struct{
+    uint8 value;
+    keyType type;
+}keyInput;
+
+typedef enum{
+    MENU,
+    G_2048,
+    G_SNAKE
+}gameMode;
 
 typedef enum{
     S_QUIT,
@@ -58,12 +76,24 @@ typedef struct{
 extern gameData_2048 gd_2048;
 extern gameData_snake gd_snake;
 
+extern uint8 B_100us;
+extern uint8 B_1ms;
+extern uint8 B_50ms;
+
+extern keyInput key_buf[25];
+extern uint8 buf_l, buf_r;
+
 void mempool_init();
 void readToBuf();
 void updateFromBuf();
+void check_key();
+void clear_key_buf();
+
+extern gameMode game_mode;
 
 extern code const uint8 str_2048[];
 void game_2048_init();                      // 初始化游戏界面
+void game_2048_run();                       // 运行游戏
 void game_2048_updateStatus(uint8 key);     // 处理输入
 
 extern code const uint8 str_snake[];

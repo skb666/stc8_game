@@ -58,12 +58,13 @@ void generate_food(){
 
 uint8 isOver_snake(){
     // 撞身体
-    if(isOnSnake(&gd_snake.snake->axis, gd_snake.snake->next))
-        return 1;
+    if(gd_snake.length > 3)
+        if(isOnSnake(&gd_snake.snake->axis, gd_snake.snake->next->next))
+            return 1;
     // 撞墙
-    if((gd_snake.snake->axis.x < 0) || (gd_snake.snake->axis.x >19))
+    if((gd_snake.snake->axis.x < 0) || (gd_snake.snake->axis.x > 19))
         return 1;
-    if((gd_snake.snake->axis.y < 0) || (gd_snake.snake->axis.y >19))
+    if((gd_snake.snake->axis.y < 0) || (gd_snake.snake->axis.y > 19))
         return 1;
     return 0;
 }
@@ -330,7 +331,108 @@ void game_snake_updateStatus(uint8 key){
     }
 }
 
+void gSnake_check_key(){
+    if(buf_l != buf_r){
+        if(key_buf[buf_l].type == K_IR){
+            switch(key_buf[buf_l].value){
+                case 17:
+                    game_snake_updateStatus('w');
+                    break;
+                case 25:
+                    game_snake_updateStatus('s');
+                    break;
+                case 20:
+                    game_snake_updateStatus('a');
+                    break;
+                case 22:
+                    game_snake_updateStatus('d');
+                    break;
+                case 12:
+                    game_snake_updateStatus('q');
+                    break;
+                case 14:
+                    game_snake_updateStatus('r');
+                    break;
+                case 21:
+                    game_snake_updateStatus('c');
+                    break;
+                case 4:
+                    game_snake_updateStatus(SPEED_SLOW);
+                    break;
+                case 5:
+                    game_snake_updateStatus(SPEED_MEDIUM);
+                    break;
+                case 6:
+                    game_snake_updateStatus(SPEED_FAST);
+                    break;
+            }
+        }else if(key_buf[buf_l].type == K_KBD){
+            switch(key_buf[buf_l].value){
+                case '+':
+                    game_snake_updateStatus('w');
+                    break;
+                case '/':
+                    game_snake_updateStatus('s');
+                    break;
+                case '-':
+                    game_snake_updateStatus('a');
+                    break;
+                case 'x':
+                    game_snake_updateStatus('d');
+                    break;
+                case '*':
+                    game_snake_updateStatus('q');
+                    break;
+                case '#':
+                    game_snake_updateStatus('r');
+                    break;
+                case 0:
+                    game_snake_updateStatus('c');
+                    break;
+                case 4:
+                    game_snake_updateStatus(SPEED_SLOW);
+                    break;
+                case 5:
+                    game_snake_updateStatus(SPEED_MEDIUM);
+                    break;
+                case 6:
+                    game_snake_updateStatus(SPEED_FAST);
+                    break;
+            }
+        }
+        ++buf_l;
+    }else{
+        clear_key_buf();
+    }
+}
+
 // 运行游戏
 void game_snake_run(){
-    snakeMove();
+    static uint8 cnt = 0;
+    if(B_50ms){
+        B_50ms = 0;
+        switch(gd_snake.Speed){
+            case SPEED_SLOW:
+                if(++cnt >= 10){
+                    cnt = 0;
+                    gSnake_check_key();
+                    snakeMove();
+                }
+                break;
+            case SPEED_MEDIUM:
+                if(++cnt >= 6){
+                    cnt = 0;
+                    gSnake_check_key();
+                    snakeMove();
+                }
+                break;
+            case SPEED_FAST:
+                if(++cnt >= 3){
+                    cnt = 0;
+                    gSnake_check_key();
+                    snakeMove();
+                }
+                break;
+        }
+    }
 }

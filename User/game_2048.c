@@ -357,3 +357,61 @@ void game_2048_updateStatus(uint8 key){
         draw_2048_status();
     }
 }
+
+// ‘À––”Œœ∑
+void game_2048_run(){
+    if(buf_l != buf_r){
+        if(key_buf[buf_l].type == K_IR){
+            switch(key_buf[buf_l].value){
+                case 17:
+                    game_2048_updateStatus('w');
+                    break;
+                case 25:
+                    game_2048_updateStatus('s');
+                    break;
+                case 20:
+                    game_2048_updateStatus('a');
+                    break;
+                case 22:
+                    game_2048_updateStatus('d');
+                    break;
+                case 12:
+                    game_2048_updateStatus('q');
+                    break;
+                case 14:
+                    game_2048_updateStatus('r');
+                    break;
+                case 21:
+                    game_2048_updateStatus('c');
+                    break;
+            }
+        }else if(key_buf[buf_l].type == K_KBD){
+            switch(key_buf[buf_l].value){
+                case '+':
+                    game_2048_updateStatus('w');
+                    break;
+                case '/':
+                    game_2048_updateStatus('s');
+                    break;
+                case '-':
+                    game_2048_updateStatus('a');
+                    break;
+                case 'x':
+                    game_2048_updateStatus('d');
+                    break;
+                case '*':
+                    game_2048_updateStatus('q');
+                    break;
+                case '#':
+                    game_2048_updateStatus('r');
+                    break;
+                case 0:
+                    game_2048_updateStatus('c');
+                    break;
+            }
+        }
+        ++buf_l;
+    }else{
+        clear_key_buf();
+    }
+}

@@ -1,9 +1,38 @@
 #include "game.h"
 
+// 定时器标记
+uint8 B_100us = 0;
+uint8 B_1ms = 0;
+uint8 B_50ms = 0;
+// 按键输入标记
+uint8 sign_ir = 0;
+int8 sign_key = -1;
+// 按键缓冲区
+keyInput key_buf[25];
+uint8 buf_l = 0, buf_r = 0;
 // 设置内存池大小
 static uint8 xdata membuff[4000];
 // eeprom缓存
 uint8 *eeprom_buf;
+// 游戏模式
+gameMode game_mode;
+
+// 1ms
+void Timer0_interrupt(void) interrupt 1{
+    static int cnt = 0;
+    cnt = (cnt + 1) % 50;
+    if(cnt == 49){
+        B_50ms = 1;
+        IO_KeyScan();
+    }
+    B_1ms = 1;
+}
+
+// 0.1ms
+void Timer4_interrupt(void) interrupt 20{
+    ir_rec_callback();      //红外接收回调函数
+    B_100us = 1;
+}
 
 void mempool_init(){
     // 初始化内存池
@@ -41,6 +70,41 @@ void updateFromBuf(){
     eeprom_buf = (uint8 *)&gd_snake.Speed;
     eeprom_write(current_s, eeprom_buf, sizeof(gd_snake.Speed));
     current_s += sizeof(gd_snake.Speed);
+}
+
+void check_key(){
+    // 矩阵键盘输入
+    if(KeyCode>=0){
+        sign_key = KEY_MAP[KeyCode];
+        KeyCode = -1;
+    }
+    // 红外输入
+    if(B_100us){
+        B_100us = 0;
+        if(ir_rx_available()){
+            // 红外接收
+            sign_ir = ir_rx_ircode();
+        }
+    }
+    
+    // 字符：0   1   2   3   4   5   6   7   8   9   #   *   w(+) s(/) a(-) d(x) ok
+    // IR  ：13  0   1   2   4   5   6   8   9   10  14  12  17   25   20   22   21
+    // 按键：0   1   2   3   4   5   6   7   8   9   35  42  43   47   45   120  -
+    if(sign_ir){
+        key_buf[buf_r].value = sign_ir;
+        key_buf[buf_r].type = K_IR;
+        ++buf_r;
+        sign_ir = 0;
+    }else if(sign_key != -1){
+        key_buf[buf_r].value = sign_key;
+        key_buf[buf_r].type = K_KBD;
+        ++buf_r;
+        sign_key = -1;
+    }
+}
+
+void clear_key_buf(){
+    buf_l = buf_r = 0;
 }
 
 // "2048" 字模(32x32)
